@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import abc
+import abc, json
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
 
@@ -50,9 +50,9 @@ class Movie(IMedia):
     def __init__(self):
         super().__init__()
         self.info_["Type"] = "Movie"
-    
+
     def __str__(self) -> str:
-        return self.info_
+        return json.dumps(self.info_, ensure_ascii=False)
 
     def parse_info(self, emby_media_info):
         movie_item = emby_media_info["Item"]
@@ -98,7 +98,6 @@ class Movie(IMedia):
         )
         log.logger.debug(self.caption_)
 
-
     def get_poster(self):
         self.poster_, err = tmdb_api.get_movie_poster(self.info_["ProviderIds"]["Tmdb"])
         if err:
@@ -114,7 +113,7 @@ class Episode(IMedia):
         self.info_["Type"] = "Episode"
 
     def __str__(self) -> str:
-        return self.info_
+        return json.dumps(self.info_, ensure_ascii=False)
 
     def parse_info(self, emby_media_info):
         episode_item = emby_media_info["Item"]
@@ -160,7 +159,6 @@ class Episode(IMedia):
             tmdbid=self.info_["ProviderIds"]["Tmdb"],
         )
         log.logger.debug(self.caption_)
-            
 
     def get_poster(self):
         self.poster_, err = tmdb_api.get_tv_season_poster(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"])
@@ -172,3 +170,28 @@ class Episode(IMedia):
             tgbot.send_photo(self.caption_, self.poster_)
         else:
             tgbot.send_message(self.caption_)
+
+
+def create_media(emby_media_info):
+    if emby_media_info["Item"]["Type"] == "Movie":
+        return Movie()
+    elif emby_media_info["Item"]["Type"] == "Episode":
+        return Episode()
+    else:
+        raise Exception("Unsupported media type.")
+
+
+def process_media(emby_media_info):
+    emby_media_info = json.loads(emby_media_info)
+    if emby_media_info["Event"] != "library.new":
+        log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
+        return
+    try:
+        md = create_media(emby_media_info)
+        md.parse_info(emby_media_info)
+        md.get_caption()
+        md.get_poster()
+        md.send_caption()
+    except Exception as e:
+        log.logger.error(md)
+        raise e
