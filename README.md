@@ -1,92 +1,134 @@
-# Emby-Telegram-Notification
+# Emby Notifier
+
+> 这是另一个项目 [watchdog_for_Emby](https://github.com/Ccccx159/watchdog_for_Emby/tree/main) 的最新优化版本，取消了 nfo 文件的监视依赖，该版本不再需要手动设置媒体库路径，对通过网盘挂载生成的媒体库更加友好~
 
 
+## Emby Server 版本 (重要！！！)
 
-## Getting started
+<font color=red>**4.8.0.80 及更新版本的 Emby Server！！！**</font>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+本项目是基于 Emby Server 官方插件 Webhooks 实现的，在 4.8.0.80 版本以前需要激活 Emby Premiere 才能使用 Webhooks 插件。
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+在 4.8.0.80 版本，Webhooks 被集成到控制台 “通知” 功能中，免费用户也可使用，因此建议使用本项目的朋友更新 Emby Server 到指定版本。
 
-## Add your files
+<mark>需要注意的是，群晖套件中心的 Emby Server 最新在线版本为 4.7.14.0，因此需要 Emby 官方网站下载相应平台的安装包进行手动安装。</mark>
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## 修订版本
 
+
+| 版本 | 日期 | 修订说明 |
+| ----- | ----- | ----- |
+| v1.0.0 | 2024.04.29 | <li>新增项目</li> |
+
+
+## 简介
+
+**Emby Notifier** 是一个基于 Emby Server Webhooks 实现的自动通知工具。Emby Server 通过 Webhooks 插件，可以在影片刮削完成后，自动推送事件到指定的 URL。本项目通过监听 Emby Server 推送的 Webhooks 事件，获取影片的基本信息，通过 TMDB 的 API 查询影片的详细信息，然后通过 Telegram Bot 推送至指定频道。
+
+## 环境变量和服务端口
+
+端口：8000
+
+| 参数 | 要求 | 说明 |
+| -- | -- | -- |
+| TMDB_API_TOKEN | 必须 | Your TMDB API Token |
+| TVDB_API_KEY | 必须 | Your TVDB API Key |
+| TG_BOT_TOKEN | 必须 | Your Telegram Bot Tokne |
+| TG_CHAT_ID | 必须 | Your Telegram Channel's Chat ID |
+| LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 WARNING|
+| LOG_EXPORT | 可选 | 日志写文件标志 [True, False] 是否将日志输出到文件，默认 False|
+| LOG_PATH | 可选 | 日志文件保存路径，默认 /var/tmp/emby_notifier_tg |
+
+## docker Run
+
+~~~shell
+docker run -d --name=emby-notifier-tg --restart=unless-stopped \
+    -e TMDB_API_TOKEN=Your_TMDB_API_Token \
+    -e TVDB_API_KEY=Your_TVDB_API_Key \
+    -e TG_BOT_TOKEN=Your_Telegram_Bot_Token \
+    -e TG_CHAT_ID=Your_Telegram_Chat_ID \
+    -p 8000:8000 \
+    b1gfac3c4t/emby_notifier_tg:latest
+  
+~~~
+
+## docker-compose
+
+```yaml
+version: '3'
+services:
+  emby_notifier_tg:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: b1gfac3c4t/emby_notifier_tg:latest
+    environment:
+      - TZ=Asia/Shanghai
+      # 这里所有的环境变量都不要使用引号
+      # 必填参数
+      - TMDB_API_TOKEN=<Your TMDB API Token>
+      - TVDB_API_KEY=<Your TVDB API Key>
+      - TG_BOT_TOKEN=<Your Telegram Bot Tokne>
+      - TG_CHAT_ID=<Your Telegram Channel's Chat ID>
+      # 可选参数
+      - LOG_LEVEL=WARNING # [DEBUG, INFO, WARNING] 三个等级，默认 WARNING
+      - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
+      - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/
+    network_mode: "bridge"
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
 ```
-cd existing_repo
-git remote add origin https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/emby-telegram-notification.git
-git branch -M main
-git push -uf origin main
+
+```bash
+docker-compose up -d
 ```
 
-## Integrate with your tools
+## Emby Server 设置
 
-- [ ] [Set up project integrations](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/emby-telegram-notification/-/settings/integrations)
+1. 打开 Emby Server 控制台，点击左侧菜单栏的 “设置” -> “通知” -> “添加 Webhooks”
 
-## Collaborate with your team
+    ![添加通知](./doc/添加通知.png)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+    ![添加Webhooks](./doc/添加webhooks.png)
 
-## Test and Deploy
+2. 在弹出的对话框中，填写 Webhooks 的 URL，例如：`http://192.168.1.100:8000`，选择数据类型为 `application/json`
 
-Use the built-in continuous integration in GitLab.
+    ![配置Webhooks](./doc/配置notifier.png)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+3. 点击 “发送测试通知” 按钮，观察 Notifier 的日志输出，如果输出了测试通知的信息，说明 Webhooks 设置成功
 
-***
+    ![接收测试事件通知](./doc/接受测试消息.png)
 
-# Editing this README
+    Notifier 日志中出现以下信息，说明 Webhooks 设置成功
+    ```shell
+     [WARNING] : Unsupported event type: system.notificationtest
+    ```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+4. 选择通知事件：媒体库 -> 新媒体已添加，点击保存
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+    ![选择通知事件](./doc/选择事件.png)
 
-## Name
-Choose a self-explaining name for your project.
+## 媒体信息检索流程
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+![](./doc/Emby_Notifier.drawio.png)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## 局限性
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Emby Server 的新媒体添加事件的触发时机受限于对新增文件的监视方式和扫描媒体库的频率，如果 Emby Server 触发新媒体添加事件，则 Notifier 也就无法推送通知。
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## 效果展示
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+电影：
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+![](https://user-images.githubusercontent.com/35327600/209752390-4e45180b-d8cc-4378-bd98-c489638f7cb7.png)
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+剧集：
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+![](https://user-images.githubusercontent.com/35327600/209752275-bad230b0-97a7-47e5-9a77-081afae7d6cf.png)
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## 参考文档
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
++ tmdb api 文档：https://developers.themoviedb.org/3
++ telegram bot api 文档：https://core.telegram.org/bots/api
