@@ -5,6 +5,7 @@ import json, traceback
 
 
 async def worker(msg_queue):
+    log.logger.info("Emby Notifier started.")
     while True:
         msg = await msg_queue.get()  # 从队列中获取消息
         log.logger.debug(f"Worker received message:{msg}")
@@ -13,7 +14,6 @@ async def worker(msg_queue):
         try:
             media.process_media(msg)
         except Exception as e:
-            log.logger.error(e)
             log.logger.error(traceback.format_exc())
 
 
@@ -55,6 +55,7 @@ async def my_httpd():
     # 使用 localhost:8000 无法监听本地网络地址，因此使用 0.0.0.0:8000 进行监听
     site = web.TCPSite(runner, "0.0.0.0", 8000)
     await site.start()
+    log.logger.info("HTTP server started at http://localhost:8000")
 
     # 等待 worker 任务完成
     await worker_task

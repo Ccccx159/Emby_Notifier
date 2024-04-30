@@ -49,7 +49,7 @@ log_level = os.getenv('LOG_LEVEL', 'WARNING')
 if log_level in ['DEBUG', 'INFO', 'WARNING']:
     level = getattr(logging, log_level)
 else:
-    level = getattr(logging, 'WARNING')
+    level = getattr(logging, 'INFO')
 
 logger.setLevel(level)
 console_handler.setLevel(level)

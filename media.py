@@ -45,6 +45,27 @@ class IMedia(abc.ABC):
     def send_caption(self):
         pass
 
+    def _get_id(self):
+        log.logger.debug(json.dumps(self.info_, ensure_ascii=False))
+        medias, err = tmdb_api.search_media(
+            self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"]
+        )
+        if err:
+            log.logger.error(err)
+            raise Exception(err)
+        Tvdb_id = self.info_["ProviderIds"].get("Tvdb", "-1")
+        for m in medias:
+            ext_ids, err = tmdb_api.get_external_ids(self.info_["Type"], m["id"])
+            if err:
+                log.logger.warning(err)
+                continue
+            if Tvdb_id == str(ext_ids.get("tvdb_id")):
+                self.info_["ProviderIds"]["Tmdb"] = str(m["id"])
+                break
+        if "Tmdb" not in self.info_["ProviderIds"]:
+            err = f"No matching media {self.info_['Name']} found on TMDB."
+            raise Exception(err)
+
 
 class Movie(IMedia):
     def __init__(self):
@@ -65,29 +86,13 @@ class Movie(IMedia):
 
     def get_caption(self):
         if "Tmdb" not in self.info_["ProviderIds"]:
-            movies, err = tmdb_api.search_media(
-                self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"]
-            )
-            if err:
-                raise Exception(err)
-            for mov in movies:
-                Imdb_id = self.info_["ProviderIds"].get("Imdb", "-1")
-                Tvdb_id = self.info_["ProviderIds"].get("Tvdb", "-1")
-                ext_ids, err = tmdb_api.get_external_ids(self.info_["Type"], mov["id"])
-                if err:
-                    log.logger.warning(err)
-                    continue
-                if Imdb_id == ext_ids.get("imdb_id") or Tvdb_id == str(
-                    ext_ids.get("tvdb_id")
-                ):
-                    self.info_["ProviderIds"]["Tmdb"] = str(mov["id"])
-                    break
-            if "Tmdb" not in self.info_["ProviderIds"]:
-                raise Exception("No matching movie found on TMDB.")
+            self._get_id()
+            
         movie_details, err = tmdb_api.get_movie_details(
             self.info_["ProviderIds"]["Tmdb"]
         )
         if err:
+            log.logger.error(err)
             raise Exception(err)
         self.caption_ = self.caption_.format(
             type_ch="电影",
@@ -105,6 +110,7 @@ class Movie(IMedia):
     def get_poster(self):
         self.poster_, err = tmdb_api.get_movie_poster(self.info_["ProviderIds"]["Tmdb"])
         if err:
+            log.logger.error(err)
             raise Exception(err)
 
     def send_caption(self):
@@ -137,29 +143,16 @@ class Episode(IMedia):
             )
             if err:
                 raise Exception(err)
-            log.logger.debug(tvdb_id)
-            series, err = tmdb_api.search_media(
-                self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"]
-            )
-            if err:
-                raise Exception(err)
-            for ser in series:
-                log.logger.debug(ser)
-                ext_ids, err = tmdb_api.get_external_ids(self.info_["Type"], ser["id"])
-                if err:
-                    log.logger.warning(err)
-                    continue
-                if tvdb_id == ext_ids.get("tvdb_id"):
-                    self.info_["ProviderIds"]["Tmdb"] = str(ser["id"])
-                    break
-            if "Tmdb" not in self.info_["ProviderIds"]:
-                raise Exception("No matching series found on TMDB.")
+            self.info_["ProviderIds"]["Tvdb"] = str(tvdb_id)
+            self._get_id()
+
         tv_details, err = tmdb_api.get_tv_episode_details(
             self.info_["ProviderIds"]["Tmdb"],
             self.info_["Season"],
             self.info_["Series"],
         )
         if err:
+            log.logger.error(err)
             raise Exception(err)
         self.caption_ = self.caption_.format(
             type_ch="剧集",
@@ -181,6 +174,7 @@ class Episode(IMedia):
             self.info_["ProviderIds"]["Tmdb"], self.info_["Season"]
         )
         if err:
+            log.logger.error(err)
             raise Exception(err)
 
     def send_caption(self):
@@ -201,6 +195,7 @@ def create_media(emby_media_info):
 
 def process_media(emby_media_info):
     emby_media_info = json.loads(emby_media_info)
+    log.logger.info(f"Received message: {emby_media_info['Title']}")
     if emby_media_info["Event"] != "library.new":
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
         return
@@ -211,5 +206,6 @@ def process_media(emby_media_info):
         md.get_poster()
         md.send_caption()
     except Exception as e:
-        log.logger.error(md)
         raise e
+    else:
+        log.logger.info(f"Message processing completed: {emby_media_info['Title']}")

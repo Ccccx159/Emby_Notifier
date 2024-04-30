@@ -35,7 +35,7 @@
 | TVDB_API_KEY | 必须 | Your TVDB API Key |
 | TG_BOT_TOKEN | 必须 | Your Telegram Bot Tokne |
 | TG_CHAT_ID | 必须 | Your Telegram Channel's Chat ID |
-| LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 WARNING|
+| LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 INFO|
 | LOG_EXPORT | 可选 | 日志写文件标志 [True, False] 是否将日志输出到文件，默认 False|
 | LOG_PATH | 可选 | 日志文件保存路径，默认 /var/tmp/emby_notifier_tg |
 
@@ -71,7 +71,7 @@ services:
       - TG_BOT_TOKEN=<Your Telegram Bot Tokne>
       - TG_CHAT_ID=<Your Telegram Channel's Chat ID>
       # 可选参数
-      - LOG_LEVEL=WARNING # [DEBUG, INFO, WARNING] 三个等级，默认 WARNING
+      - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
       - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/
     network_mode: "bridge"

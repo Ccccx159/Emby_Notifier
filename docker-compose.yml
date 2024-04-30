@@ -14,7 +14,7 @@ services:
       - TG_BOT_TOKEN=<Your Telegram Bot Tokne>
       - TG_CHAT_ID=<Your Telegram Channel's Chat ID>
       # 可选参数
-      - LOG_LEVEL=WARNING # [DEBUG, INFO, WARNING] 三个等级，默认 WARNING
+      - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
       - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/
     network_mode: "bridge"

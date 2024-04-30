@@ -29,6 +29,7 @@ def login():
     try:
         response = requests.post(login_url, json=login_data, headers=TVDB_API_HEADERS)
         response.raise_for_status()
+        log.logger.info("TVDB login successful.")
         global TVDB_API_TOKEN
         TVDB_API_TOKEN = response.json().get("data", {}).get("token", "")
         log.logger.debug(response.json())
