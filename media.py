@@ -77,12 +77,16 @@ class Movie(IMedia):
                 if err:
                     log.logger.warning(err)
                     continue
-                if Imdb_id == ext_ids.get("imdb_id") or Tvdb_id == str(ext_ids.get("tvdb_id")):
+                if Imdb_id == ext_ids.get("imdb_id") or Tvdb_id == str(
+                    ext_ids.get("tvdb_id")
+                ):
                     self.info_["ProviderIds"]["Tmdb"] = str(mov["id"])
                     break
             if "Tmdb" not in self.info_["ProviderIds"]:
                 raise Exception("No matching movie found on TMDB.")
-        movie_details, err = tmdb_api.get_movie_details(self.info_["ProviderIds"]["Tmdb"])
+        movie_details, err = tmdb_api.get_movie_details(
+            self.info_["ProviderIds"]["Tmdb"]
+        )
         if err:
             raise Exception(err)
         self.caption_ = self.caption_.format(
@@ -118,7 +122,9 @@ class Episode(IMedia):
     def parse_info(self, emby_media_info):
         episode_item = emby_media_info["Item"]
         self.info_["Name"] = episode_item["SeriesName"]
-        self.info_["PremiereYear"] = my_utils.iso8601_convert_CST(episode_item["PremiereDate"]).year
+        self.info_["PremiereYear"] = my_utils.iso8601_convert_CST(
+            episode_item["PremiereDate"]
+        ).year
         self.info_["ProviderIds"] = episode_item["ProviderIds"]
         self.info_["Series"] = episode_item["IndexNumber"]
         self.info_["Season"] = episode_item["ParentIndexNumber"]
@@ -126,11 +132,15 @@ class Episode(IMedia):
 
     def get_caption(self):
         if "Tmdb" not in self.info_["ProviderIds"]:
-            tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(self.info_["ProviderIds"]["Tvdb"])
+            tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(
+                self.info_["ProviderIds"]["Tvdb"]
+            )
             if err:
                 raise Exception(err)
             log.logger.debug(tvdb_id)
-            series, err = tmdb_api.search_media(self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"])
+            series, err = tmdb_api.search_media(
+                self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"]
+            )
             if err:
                 raise Exception(err)
             for ser in series:
@@ -144,14 +154,20 @@ class Episode(IMedia):
                     break
             if "Tmdb" not in self.info_["ProviderIds"]:
                 raise Exception("No matching series found on TMDB.")
-        tv_details, err = tmdb_api.get_tv_episode_details(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"], self.info_["Series"])
+        tv_details, err = tmdb_api.get_tv_episode_details(
+            self.info_["ProviderIds"]["Tmdb"],
+            self.info_["Season"],
+            self.info_["Series"],
+        )
         if err:
             raise Exception(err)
         self.caption_ = self.caption_.format(
             type_ch="剧集",
             title=self.info_["Name"] + " " + tv_details["name"],
             year=tv_details["air_date"][:4],
-            episode="已更新至 第{}季 第{}集\n".format(tv_details["season_number"], tv_details["episode_number"]),
+            episode="已更新至 第{}季 第{}集\n".format(
+                tv_details["season_number"], tv_details["episode_number"]
+            ),
             rating=tv_details["vote_average"],
             rel=tv_details["air_date"],
             intro=tv_details["overview"],
@@ -161,7 +177,9 @@ class Episode(IMedia):
         log.logger.debug(self.caption_)
 
     def get_poster(self):
-        self.poster_, err = tmdb_api.get_tv_season_poster(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"])
+        self.poster_, err = tmdb_api.get_tv_season_poster(
+            self.info_["ProviderIds"]["Tmdb"], self.info_["Season"]
+        )
         if err:
             raise Exception(err)
 
