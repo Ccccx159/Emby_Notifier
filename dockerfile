@@ -2,7 +2,7 @@ FROM python:3.11-alpine3.18
 
 LABEL maintainer="Xu@nCh3n"
 
-ENV TZ=Asia/Shanghai LANG=zh_CN.UTF-8
+ENV TZ=Asia/Shanghai LANG=zh_CN.UTF-8 PYTHONUNBUFFERED=1
 
 RUN set -eux && \
         \
