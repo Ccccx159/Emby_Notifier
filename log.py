@@ -45,7 +45,7 @@ logger = logging.getLogger('my_logger')
 console_handler = logging.StreamHandler()
 
 '''日志级别设置'''
-log_level = os.getenv('LOG_LEVEL', 'WARNING')
+log_level = os.getenv('LOG_LEVEL', 'INFO')
 if log_level in ['DEBUG', 'INFO', 'WARNING']:
     level = getattr(logging, log_level)
 else:
