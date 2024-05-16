@@ -40,4 +40,5 @@ def send_photo(caption, photo):
         res.raise_for_status()
     except Exception as e:
         log.logger.error(json.dumps(payload,ensure_ascii=False))
+        log.logger.error(res.text)
         raise e

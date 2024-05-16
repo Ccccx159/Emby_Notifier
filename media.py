@@ -18,7 +18,7 @@ class IMedia(abc.ABC):
             "Season": 0,
         }
         self.caption_ = (
-            "#影视更新\n"
+            "#影视更新 #{server_name}\n"
             + "\[{type_ch}]\n"
             + "片名： *{title}* ({year})\n"
             + "{episode}"
@@ -28,6 +28,8 @@ class IMedia(abc.ABC):
             + "相关链接： [TMDB](https://www.themoviedb.org/{type}/{tmdbid}?language=zh-CN)\n"
         )
         self.poster_ = ""
+        self.server_name_ = ""
+        self.escape_ch = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
 
     @abc.abstractmethod
     def parse_info(self, emby_media_info):
@@ -82,6 +84,7 @@ class Movie(IMedia):
             movie_item["PremiereDate"]
         ).year
         self.info_["ProviderIds"] = movie_item["ProviderIds"]
+        self.server_name_ = emby_media_info["Server"]["Name"]
         log.logger.debug(self.info_)
 
     def get_caption(self):
@@ -94,7 +97,13 @@ class Movie(IMedia):
         if err:
             log.logger.error(err)
             raise Exception(err)
+        
+        # check server name and escape any special characters
+        for ch in self.escape_ch:
+            self.server_name_ = self.server_name_.replace(ch, "\\" + ch)
+
         self.caption_ = self.caption_.format(
+            server_name=self.server_name_,
             type_ch="电影",
             title=movie_details["title"],
             year=movie_details["release_date"][:4],
@@ -134,6 +143,7 @@ class Episode(IMedia):
         self.info_["ProviderIds"] = episode_item["ProviderIds"]
         self.info_["Series"] = episode_item["IndexNumber"]
         self.info_["Season"] = episode_item["ParentIndexNumber"]
+        self.server_name_ = emby_media_info["Server"]["Name"]
         log.logger.debug(self.info_)
 
     def get_caption(self):
@@ -154,7 +164,13 @@ class Episode(IMedia):
         if err:
             log.logger.error(err)
             raise Exception(err)
+        
+        # check server name and escape any special characters
+        for ch in self.escape_ch:
+            self.server_name_ = self.server_name_.replace(ch, "\\" + ch)
+        
         self.caption_ = self.caption_.format(
+            server_name=self.server_name_,
             type_ch="剧集",
             title=self.info_["Name"] + " " + tv_details["name"],
             year=tv_details["air_date"][:4],
