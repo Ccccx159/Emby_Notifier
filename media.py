@@ -5,6 +5,21 @@ import abc, json
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
 
+DEFAULT_MEDIA_MSG = {
+    "Title": "event title",
+    "Event": "library.new/ItemAdded",
+    "Item": {
+        "Type": "Movie/Episode",
+        "Name": "movie name",
+        "SeriesName": "series name",
+        "PremiereDate": "",
+        "IndexNumber": 0,
+        "ParentIndexNumber": 0,
+        "ProviderIds": {"Tvdb": "9549482", "Imdb": "tt11116974"}
+    },
+    "Server": {"Name": "server name"},
+}
+
 
 class IMedia(abc.ABC):
 
@@ -80,9 +95,7 @@ class Movie(IMedia):
     def parse_info(self, emby_media_info):
         movie_item = emby_media_info["Item"]
         self.info_["Name"] = movie_item["Name"]
-        self.info_["PremiereYear"] = my_utils.iso8601_convert_CST(
-            movie_item["PremiereDate"]
-        ).year
+        self.info_["PremiereYear"] = int(movie_item["PremiereDate"]) if movie_item["PremiereDate"].isdigit() else my_utils.iso8601_convert_CST(movie_item["PremiereDate"]).year
         self.info_["ProviderIds"] = movie_item["ProviderIds"]
         self.server_name_ = emby_media_info["Server"]["Name"]
         log.logger.debug(self.info_)
@@ -137,9 +150,7 @@ class Episode(IMedia):
     def parse_info(self, emby_media_info):
         episode_item = emby_media_info["Item"]
         self.info_["Name"] = episode_item["SeriesName"]
-        self.info_["PremiereYear"] = my_utils.iso8601_convert_CST(
-            episode_item["PremiereDate"]
-        ).year
+        self.info_["PremiereYear"] = int(episode_item["PremiereDate"]) if episode_item["PremiereDate"].isdigit() else my_utils.iso8601_convert_CST(episode_item["PremiereDate"]).year
         self.info_["ProviderIds"] = episode_item["ProviderIds"]
         self.info_["Series"] = episode_item["IndexNumber"]
         self.info_["Season"] = episode_item["ParentIndexNumber"]
@@ -209,8 +220,45 @@ def create_media(emby_media_info):
         raise Exception("Unsupported media type.")
 
 
+def jellyfin_msg_preprocess(msg):
+    original_msg = json.loads(msg)
+    # 通过字段 "NotificationType" 判断当前是否为 Jellyfin 事件
+    if "NotificationType" in original_msg:
+        if original_msg["NotificationType"] != "ItemAdded":
+            log.logger.warning(f"Unsupported event type: {original_msg['NotificationType']}")
+            return None
+        jellyfin_msg = DEFAULT_MEDIA_MSG.copy()
+        jellyfin_msg["Server"]["Name"] = original_msg["ServerName"]
+        jellyfin_msg["Event"] = "library.new"
+        
+        if original_msg["ItemType"] == "Movie":
+            jellyfin_msg["Title"] = f"新 {original_msg['Name']} 在 {original_msg['ServerName']}"
+            jellyfin_msg["Item"]["Type"] = "Movie"
+            jellyfin_msg["Item"]["Name"] = original_msg["Name"]
+        elif original_msg["ItemType"] == "Episode":
+            jellyfin_msg["Title"] = f"新 {original_msg['SeriesName']} S{original_msg['SeasonNumber00']} - E{original_msg['EpisodeNumber00']} 在 {original_msg['ServerName']}"
+            jellyfin_msg["Item"]["Type"] = "Episode"
+            jellyfin_msg["Item"]["SeriesName"] = original_msg["SeriesName"]
+            jellyfin_msg["Item"]["IndexNumber"] = original_msg["EpisodeNumber"]
+            jellyfin_msg["Item"]["ParentIndexNumber"] = original_msg["SeasonNumber"]
+        else:
+            raise Exception("Unsupported media type.")
+
+        jellyfin_msg["Item"]["PremiereDate"] = str(original_msg["Year"])
+        if "Provider_tmdb" in original_msg:
+            jellyfin_msg["Item"]["ProviderIds"]["Tmdb"] = original_msg["Provider_tmdb"]
+        if "Provider_tvdb" in original_msg:
+            jellyfin_msg["Item"]["ProviderIds"]["Tvdb"] = original_msg["Provider_tvdb"]
+        if "Provider_imdb" in original_msg:
+            jellyfin_msg["Item"]["ProviderIds"]["Imdb"] = original_msg["Provider_imdb"]
+        return jellyfin_msg
+    else:
+        return original_msg
+
+
+
 def process_media(emby_media_info):
-    emby_media_info = json.loads(emby_media_info)
+    emby_media_info = jellyfin_msg_preprocess(emby_media_info)
     log.logger.info(f"Received message: {emby_media_info['Title']}")
     if emby_media_info["Event"] != "library.new":
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
