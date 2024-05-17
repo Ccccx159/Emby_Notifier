@@ -68,5 +68,39 @@ def get_seriesid_by_episodeid(episode_id):
             else:
                 break
     return None, f"TVDB episode ID {episode_id} not found: {e}"
+
+def search_series(series_name, year):
+    """
+    Search for a TV series by name and year.
+
+    Args:
+        series_name (str): The name of the TV series.
+        year (int): The year the series was released.
+
+    Returns:
+        int: The TVDB series ID.
+        str: An error message if the request fails.
+    """
+    global TVDB_API_TOKEN
+    for _ in range(2):
+        if TVDB_API_TOKEN == "":
+            TVDB_API_TOKEN, err = login()
+            if err:
+                return None, err
+        search_url = f"{TVDB_API}/search?query={series_name}&type=series&year={year}"
+        try:
+            response = requests.get(search_url, headers=TVDB_API_HEADERS)
+            response.raise_for_status()
+            for series in response.json().get("data", []):
+                if series.get("name") == series_name:
+                    return series.get("tvdb_id"), None
+            return None, f"No complete match for TVDB series {series_name} found."
+        except requests.exceptions.RequestException as e:
+            if e.response.status_code == 401:
+                TVDB_API_TOKEN = ""
+                continue
+            else:
+                break
+    return None, f"TVDB series {series_name} not found: {e}"
         
     
