@@ -2,6 +2,9 @@
 
 > 这是另一个项目 [watchdog_for_Emby](https://github.com/Ccccx159/watchdog_for_Emby/tree/main) 的最新优化版本，取消了 nfo 文件的监视依赖，该版本不再需要手动设置媒体库路径，对通过网盘挂载生成的媒体库更加友好~
 
+## 重大更新！！！
+
+v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [Jellyfin Server 设置](#jellyfin-server-设置)
 
 ## Emby Server 版本 (重要！！！)
 
@@ -18,6 +21,7 @@
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v2.0.0 | 2024.05.17 | <li><mark>1. 支持 Jellyfin Server</mark></li> |
 | v1.0.4 | 2024.05.16 | <li>1. 推送消息新增 “服务器名称” tag，当Notifier服务被应用于多个 server 时，易于区分</li><li>2. tgbot 推送失败时，增加日志输出 api 返回内容</li> |
 | v1.0.3 | 2024.05.08 | <li>1. 修复环境变量校验中的一处环境变量名称笔误，该错误会导致无法正常启动服务</li><li>2. dockerfile 增加环境变量PYTHONUNBUFFERED=1，避免因日志缓存无法即时获取信息</li> |
 | v1.0.2 | 2024.05.08 | <li>1. 修复当 LOG_LEVEL 未设置时，默认等级 INFO 不生效，仍然维持 WARNING 等级的错误；</li><li>2. 新增 welcome 日志，输出项目名称，作者，版本等信息；</li><li>3. 新增环境变量校验，当必选项未设置时，将不会启动服务;</li> |
@@ -112,6 +116,28 @@ docker-compose up -d
 4. 选择通知事件：媒体库 -> 新媒体已添加，点击保存
 
     ![选择通知事件](./doc/选择事件.png)
+
+## Jellyfin Server 设置
+
+1. 打开 Jellyfin Server 控制台，点击左侧菜单栏的 “插件”，点击 “Webhooks” 插件进行配置
+
+    ![Jellyfin Webhooks](./doc/设置webhook.png)
+
+2. 添加类型为 "Generic Destination" 的 webhook
+
+    ![添加类型](./doc/选择generic_destination.png)
+
+3. 配置 Generic Destination
+  
+    ![配置Generic Destination](./doc/配置.png)
+
+4. 点击左侧 “通知”，进入通知配置界面
+
+    ![通知配置](./doc/通知设置.png)
+
+5. 启用通知
+
+    ![启用通知](./doc/启用通知.png)
 
 ## 媒体信息检索流程
 
