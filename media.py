@@ -47,7 +47,7 @@ class IMedia(abc.ABC):
         pass
 
     def _get_id(self):
-        log.logger.debug(json.dumps(self.info_, ensure_ascii=False))
+        log.logger.info(json.dumps(self.info_, ensure_ascii=False))
         medias, err = tmdb_api.search_media(
             self.info_["Type"], self.info_["Name"], self.info_["PremiereYear"]
         )
@@ -154,18 +154,15 @@ class Episode(IMedia):
         log.logger.debug(self.info_)
 
     def get_caption(self):
-        if "Tmdb" not in self.info_["ProviderIds"]:
-            if "Tvdb" not in self.info_["ProviderIds"]:
-                tvdb_id, err = tvdb_api.search_series(self.info_["Name"], self.info_["PremiereYear"])
-                if err:
-                    raise Exception(err)
+        if "Tvdb" in self.info_["ProviderIds"]:
+            tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(self.info_["ProviderIds"]["Tvdb"])
+            if err:
+                log.logger.warn(err)
+                self.info_["ProviderIds"].pop("Tvdb")
             else:
-                tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(self.info_["ProviderIds"]["Tvdb"])
-                if err:
-                    raise Exception(err)
-            self.info_["ProviderIds"]["Tvdb"] = str(tvdb_id)
-            self._get_id()
+                self.info_["ProviderIds"]["Tvdb"] = str(tvdb_id)
 
+        self._get_id()
         tv_details, err = tmdb_api.get_tv_episode_details(
             self.info_["ProviderIds"]["Tmdb"],
             self.info_["Season"],
@@ -178,7 +175,7 @@ class Episode(IMedia):
         # check server name and escape any special characters
         for ch in self.escape_ch:
             self.server_name_ = self.server_name_.replace(ch, "\\" + ch)
-        
+
         self.caption_ = self.caption_.format(
             server_name=self.server_name_,
             type_ch="剧集",
