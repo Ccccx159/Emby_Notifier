@@ -8,6 +8,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 ## Emby Server 版本 (重要！！！)
 
+
 <font color=red>**4.8.0.80 及更新版本的 Emby Server！！！**</font>
 
 本项目是基于 Emby Server 官方插件 Webhooks 实现的，在 4.8.0.80 版本以前需要激活 Emby Premiere 才能使用 Webhooks 插件。
@@ -21,7 +22,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
-| v2.0.0 | 2024.05.17 | <li><mark>1. 支持 Jellyfin Server</mark></li> |
+| v2.0.0 | 2024.05.17 | <li><mark>1. 支持 Jellyfin Server</mark></li><li>2. 优化部分日志信息，方便调试和跟踪问题</li><li>3. 优化逻辑，当无法匹配id时，默认使用第一个搜索结果，避免因为id缺失导致无结果（对于较少部分id缺失的媒体文件，由于缺少匹配和校验机制，可能出现推送结果与实际影片不符现象）</li> |
 | v1.0.4 | 2024.05.16 | <li>1. 推送消息新增 “服务器名称” tag，当Notifier服务被应用于多个 server 时，易于区分</li><li>2. tgbot 推送失败时，增加日志输出 api 返回内容</li> |
 | v1.0.3 | 2024.05.08 | <li>1. 修复环境变量校验中的一处环境变量名称笔误，该错误会导致无法正常启动服务</li><li>2. dockerfile 增加环境变量PYTHONUNBUFFERED=1，避免因日志缓存无法即时获取信息</li> |
 | v1.0.2 | 2024.05.08 | <li>1. 修复当 LOG_LEVEL 未设置时，默认等级 INFO 不生效，仍然维持 WARNING 等级的错误；</li><li>2. 新增 welcome 日志，输出项目名称，作者，版本等信息；</li><li>3. 新增环境变量校验，当必选项未设置时，将不会启动服务;</li> |
