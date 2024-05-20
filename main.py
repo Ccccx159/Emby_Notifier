@@ -18,9 +18,9 @@ def welcome():
     print("\033[0m")
     print("Welcome to Emby Notifier!")
     print("Author: xu4n_ch3n")
-    print("Version: 1.0.4")
-    print("Date: 2024-05-16")
-    print("Description: Emby Notifier is a media notification service for Emby Server. ")
+    print("Version: 2.0.0")
+    print("Date: 2024-05-17")
+    print("Description: Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported.")
     print("Repository: https://github.com/Ccccx159/Emby_Notifier")
     print("")
 

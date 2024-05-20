@@ -2,16 +2,21 @@ from aiohttp import web
 import asyncio
 import log, media
 import json, traceback
+import my_utils
 
 
 async def worker(msg_queue):
     log.logger.info("Emby Notifier started.")
     while True:
         msg = await msg_queue.get()  # 从队列中获取消息
-        log.logger.debug(f"Worker received message:{msg}")
         # 在这里进行消息处理，如发送到其他地方或执行其他操作
         # 仅支持 "Event": "library.new" 类型时间，其余不处理
         try:
+            # 将unicode编码转换为中文字符
+            if my_utils.contains_unicode_escape(msg):
+                log.logger.debug("msg contains unicode escape sequences.")
+                msg = msg.encode('utf-8').decode('unicode_escape')
+            log.logger.debug(f"Decoded message: {msg}")
             media.process_media(msg)
         except Exception as e:
             log.logger.error(traceback.format_exc())
