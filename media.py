@@ -263,7 +263,7 @@ def jellyfin_msg_preprocess(msg):
             jellyfin_msg["Item"]["ProviderIds"]["Tvdb"] = original_msg["Provider_tvdb"]
         if "Provider_imdb" in original_msg:
             jellyfin_msg["Item"]["ProviderIds"]["Imdb"] = original_msg["Provider_imdb"]
-        # FIXME: Jellyfin 部分剧集没有提供 Provider_imdb 和 Provider_tvdb 信息（目前仅发现国产剧没有 Provider_xx 信息）
+        # FIXME: Jellyfin 部分剧集没有提供 Provider_imdb 和 Provider_tvdb 信息
         if jellyfin_msg["Item"]["ProviderIds"] == {}:
             log.logger.warning(f"Jellyfin Server not get any ProviderIds for Event: {jellyfin_msg['Title']}")
         return jellyfin_msg
@@ -279,6 +279,8 @@ def process_media(emby_media_info):
     log.logger.info(f"Received message: {emby_media_info['Title']}")
     if emby_media_info["Event"] != "library.new":
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
+        if emby_media_info["Event"] == "system.notificationtest":
+            tgbot.send_message("Emby Notifier worked! Test Success!")
         return
     try:
         md = create_media(emby_media_info)
