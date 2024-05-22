@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import abc, json
+import abc, json, time
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
 
@@ -280,7 +280,11 @@ def process_media(emby_media_info):
     if emby_media_info["Event"] != "library.new":
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
         if emby_media_info["Event"] == "system.notificationtest":
-            tgbot.send_message("Emby Notifier worked! Test Success!")
+            log.logger.warning("This is a notification test message. Please check your Telegram chat, if you received a message from Emby Notifier, it works!")
+            tgbot.send_message(
+                f"🎉 *Congratulations!*  Emby Notifier worked! 🎉\n\nThis is a test message from *{emby_media_info['Server']['Name']}*, TEST SUCCESS! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~ \n\n{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
+            )
+
         return
     try:
         md = create_media(emby_media_info)
