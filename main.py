@@ -2,27 +2,37 @@
 # -*- coding: UTF-8 -*-
 
 import asyncio
-import my_httpd
+import log, my_httpd
 import os, time
 
-def welcome():
-    print("\033[1;32m")
-    print("""
-███████╗███╗   ███╗██████╗ ██╗   ██╗    ███╗   ██╗ ██████╗ ████████╗██╗███████╗██╗███████╗██████╗ 
+AUTHOR = "xu4n_ch3n"
+VERSION = "2.1.0"
+UPDATETIME = "2024-05-22"
+DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
+REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
+
+WELCOME = f"""
+███████╗███╗   ███╗██████╗ ██╗   ██╗    ███╗   ██╗ ██████╗ ████████╗██╗███████╗██╗███████╗██████╗
 ██╔════╝████╗ ████║██╔══██╗╚██╗ ██╔╝    ████╗  ██║██╔═══██╗╚══██╔══╝██║██╔════╝██║██╔════╝██╔══██╗
 █████╗  ██╔████╔██║██████╔╝ ╚████╔╝     ██╔██╗ ██║██║   ██║   ██║   ██║█████╗  ██║█████╗  ██████╔╝
 ██╔══╝  ██║╚██╔╝██║██╔══██╗  ╚██╔╝      ██║╚██╗██║██║   ██║   ██║   ██║██╔══╝  ██║██╔══╝  ██╔══██╗
 ███████╗██║ ╚═╝ ██║██████╔╝   ██║       ██║ ╚████║╚██████╔╝   ██║   ██║██║     ██║███████╗██║  ██║
 ╚══════╝╚═╝     ╚═╝╚═════╝    ╚═╝       ╚═╝  ╚═══╝ ╚═════╝    ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
-          """)
+          
+Welcome to Emby Notifier!
+Author: {AUTHOR}
+Version: {VERSION}
+Update Time: {UPDATETIME}
+Description: {DESCRIPTION}
+Repository: {REPOSITORY}
+
+"""
+
+
+def welcome():
+    print("\033[1;32m")
+    print(WELCOME)
     print("\033[0m")
-    print("Welcome to Emby Notifier!")
-    print("Author: xu4n_ch3n")
-    print("Version: 2.0.0")
-    print("Date: 2024-05-17")
-    print("Description: Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported.")
-    print("Repository: https://github.com/Ccccx159/Emby_Notifier")
-    print("")
 
 def env_check():
     print(f"{'Checking environment variables...':<30}")
@@ -40,6 +50,11 @@ def env_check():
         print("\033[0m")
         while True:
             time.sleep(1)
+
+    if 'True' == os.getenv('LOG_EXPORT'):
+        # 如果有日志文件输出，则向日志文件输出欢迎信息
+        file_path = os.getenv('LOG_PATH', '/var/tmp/emby_notifier_tg/') + '/' + time.strftime("%Y-%m-%d", time.localtime()) + '.log'
+        print(WELCOME, file=open(file_path, 'w'))
             
 
 

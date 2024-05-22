@@ -282,7 +282,7 @@ def process_media(emby_media_info):
         if emby_media_info["Event"] == "system.notificationtest":
             log.logger.warning("This is a notification test message. Please check your Telegram chat, if you received a message from Emby Notifier, it works!")
             tgbot.send_message(
-                f"🎉 *Congratulations!*  Emby Notifier worked! 🎉\n\nThis is a test message from *{emby_media_info['Server']['Name']}*, TEST SUCCESS! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~ \n\n{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
+                f"🎉 *Congratulations!* 🎉 \n\nEmby Notifier worked! \n\nThis is a test message from *{emby_media_info['Server']['Name']}*! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~ \n\n{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
             )
 
         return

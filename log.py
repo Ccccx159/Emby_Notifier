@@ -57,7 +57,7 @@ console_handler.setLevel(level)
 # 输出到文件
 log_export = os.getenv('LOG_EXPORT', 'False')
 if log_export.lower() == 'true':
-    path = os.getenv('LOG_PATH', '/var/tmp/media_dlhelper_logs/')
+    path = os.getenv('LOG_PATH', '/var/tmp/emby_notifier_tg/')
     os.makedirs(path, exist_ok=True)  # This will create the directory if it does not exist, and do nothing if it does.
     '''Get the current date as the log file name'''
     fileName = datetime.datetime.now().strftime('%Y-%m-%d') + '.log'  # Use strftime to format the date
