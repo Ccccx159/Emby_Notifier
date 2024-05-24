@@ -36,6 +36,8 @@ def login():
         TVDB_API_HEADERS["Authorization"] = f"Bearer {TVDB_API_TOKEN}"
         return TVDB_API_TOKEN, None
     except requests.exceptions.RequestException as e:
+        if response.status_code == 401:
+            log.logger.error(f"TVDB login failed. {response.json()['message']} Current API key: {TVDB_API_KEY}")
         return None, f"TVDB login failed. Check network connection or API key: {e}"
 
 
@@ -51,8 +53,9 @@ def get_seriesid_by_episodeid(episode_id):
         str: An error message if the request fails.
     """
     global TVDB_API_TOKEN
+    log.logger.error(f"TVDB_API_TOKEN: {TVDB_API_TOKEN}, TVDB_API_KEY: {TVDB_API_KEY}")
     for _ in range(2):
-        if TVDB_API_TOKEN == "":
+        if TVDB_API_TOKEN == "" or TVDB_API_TOKEN is None:
             TVDB_API_TOKEN, err = login()
             if err:
                 return None, err
@@ -66,8 +69,8 @@ def get_seriesid_by_episodeid(episode_id):
                 TVDB_API_TOKEN = ""
                 continue
             else:
-                break
-    return None, f"TVDB episode ID {episode_id} not found: {e}"
+                return None, f"TVDB episode ID {episode_id} not found: {e}"
+    return None, f"TVDB episode ID {episode_id} not found"
 
 def search_series(series_name, year):
     """
@@ -83,7 +86,7 @@ def search_series(series_name, year):
     """
     global TVDB_API_TOKEN
     for _ in range(2):
-        if TVDB_API_TOKEN == "":
+        if TVDB_API_TOKEN == "" or TVDB_API_TOKEN is None:
             TVDB_API_TOKEN, err = login()
             if err:
                 return None, err

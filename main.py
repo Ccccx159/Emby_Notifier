@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import asyncio
-import log, my_httpd
+import log, my_httpd, tmdb_api, tvdb_api, tgbot
 import os, time
 
 AUTHOR = "xu4n_ch3n"
@@ -57,9 +57,35 @@ def env_check():
         print(WELCOME, file=open(file_path, 'w'))
             
 
+def require_check():
+    log.logger.info("Checking requirements...")
+    try:
+        # check TMDB_API_TOKEN valid
+        log.logger.info("Checking TMDB_API_TOKEN...")
+        tmdb_api.login()
+        
+        # TODO: check TVDB_API_KEY valid
+        # log.logger.info("Checking TVDB_API_KEY...")
+        # token, err = tvdb_api.login()
+        # if not token:
+        #     raise Exception(err)
+        
+        # check TG_BOT_TOKEN valid
+        log.logger.info("Checking TG_BOT_TOKEN...")
+        tgbot.bot_authorization()
+        
+        # check TG_CHAT_ID valid
+        log.logger.info("Checking TG_CHAT_ID...")
+        tgbot.get_chat()
+    except Exception as e:
+        log.logger.error(e)
+        raise e
+
+
 
 # 运行主事件循环
 if __name__ == "__main__":
     welcome()
     env_check()
+    require_check()
     asyncio.run(my_httpd.my_httpd())

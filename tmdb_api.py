@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-import requests, os
+import requests, os, log
 
 TMDB_API = "https://api.themoviedb.org/3"
 
@@ -18,6 +18,26 @@ TMDB_MEDIA_TYPES = {
 }
 
 TMDB_LANG = "zh-CN"
+
+
+def login():
+    """
+    Logs in to the TMDB API.
+
+    Returns:
+        tuple: A tuple containing a boolean value indicating the success of the login and an error message if login fails.
+    """
+    login_url = f"{TMDB_API}/authentication"
+    try:
+        response = requests.get(login_url, headers=TMDB_API_HEADERS, timeout=5)
+        response.raise_for_status()
+        log.logger.info("TMDB login successful.")
+    except requests.exceptions.ConnectionError as e:
+        log.logger.error(f"TMDB login failed. Check network connection: {e}")
+        raise e
+    except requests.exceptions.RequestException as e:
+        log.logger.error(f"TMDB login failed. {response.json()['status_message']} Current API token: {TMDB_API_TOKEN}")
+        raise e
 
 
 def search_media(media_type, name, year):
