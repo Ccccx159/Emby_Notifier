@@ -22,6 +22,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v2.2.0 | 2024.05.24 | <li>1. 增加必填参数有效性校验，基于 TMDB authorization 和 tgbot getMe method 等方法进行认证，通过后才启动服务</li><li>2. 将 TVDB_API_KEY 修改为 “可选”，兼容性修改。使用过程中出现 Server 的通知消息中无 ProviderIds 信息，tvdb api 请求返回 502 等情况，导致服务不够稳定，为了提高兼容性，将 TVDB_API_KEY 设置为可选配置，若配置，则对于有 tvdb_id 且无 tmdb_id 的影片可以有效提高信息检索准确性</li><li>3. 优化部分 Requests 请求的异常处理</li> |
 | v2.1.0 | 2024.05.22 | <li>1. 新增测试 message 推送，当Emby Server发送测试通知时，将消息推送到对应 tg chat。仅输出日志容易导致使用者误解为无响应</li><li>2. 修改 README 中对 TMDB_API_TOKEN 的中文解释为 "API 读访问令牌"</li><li>3. tgbot sendmessage 方法新增异常信息打印</li><li>4. 修复日志文件默认路径错误，并当设置LOG_EXPORT=True时，将欢迎信息同步写入日志文件</li> |
 | v2.0.0 | 2024.05.17 | <li><mark>1. 支持 Jellyfin Server</mark></li><li>2. 优化部分日志信息，方便调试和跟踪问题</li><li>3. 优化逻辑，当无法匹配id时，默认使用第一个搜索结果，避免因为id缺失导致无结果（对于较少部分id缺失的媒体文件，由于缺少匹配和校验机制，可能出现推送结果与实际影片不符现象）</li> |
 | v1.0.4 | 2024.05.16 | <li>1. 推送消息新增 “服务器名称” tag，当Notifier服务被应用于多个 server 时，易于区分</li><li>2. tgbot 推送失败时，增加日志输出 api 返回内容</li> |
@@ -42,7 +43,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 | 参数 | 要求 | 说明 |
 | -- | -- | -- |
 | TMDB_API_TOKEN | 必须 | TMDB API 读访问令牌（API Read Access Token） |
-| TVDB_API_KEY | 必须 | Your TVDB API Key |
+| TVDB_API_KEY | 可选 | Your TVDB API Key |
 | TG_BOT_TOKEN | 必须 | Your Telegram Bot Token |
 | TG_CHAT_ID | 必须 | Your Telegram Channel's Chat ID |
 | LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 INFO|
@@ -77,10 +78,10 @@ services:
       # 这里所有的环境变量都不要使用引号
       # 必填参数
       - TMDB_API_TOKEN=<Your TMDB API Token>
-      - TVDB_API_KEY=<Your TVDB API Key>
       - TG_BOT_TOKEN=<Your Telegram Bot Tokne>
       - TG_CHAT_ID=<Your Telegram Channel's Chat ID>
       # 可选参数
+      - TVDB_API_KEY=<Your TVDB API Key>
       - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
       - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/

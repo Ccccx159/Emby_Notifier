@@ -6,8 +6,8 @@ import log, my_httpd, tmdb_api, tvdb_api, tgbot
 import os, time
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "2.1.0"
-UPDATETIME = "2024-05-22"
+VERSION = "2.2.0"
+UPDATETIME = "2024-05-24"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
@@ -37,7 +37,7 @@ def welcome():
 def env_check():
     print(f"{'Checking environment variables...':<30}")
     print(f"{'TMDB_API_TOKEN:':<15} {'(req)'} {os.getenv('TMDB_API_TOKEN', 'None')}")
-    print(f"{'TVDB_API_KEY:':<15} {'(req)'} {os.getenv('TVDB_API_KEY', 'None')}")
+    print(f"{'TVDB_API_KEY:':<15} {'(opt)'} {os.getenv('TVDB_API_KEY', 'None')}")
     print(f"{'TG_BOT_TOKEN:':<15} {'(req)'} {os.getenv('TG_BOT_TOKEN', 'None')}")
     print(f"{'TG_CHAT_ID:':<15} {'(req)'} {os.getenv('TG_CHAT_ID', 'None')}")
     print(f"{'LOG_LEVEL:':<15} {'(opt)'} {os.getenv('LOG_LEVEL', 'INFO')}")
