@@ -28,7 +28,7 @@ class IMedia(abc.ABC):
         )
         self.poster_ = ""
         self.server_name_ = ""
-        self.escape_ch = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
+        self.escape_ch = ['_', '*', '`', '[']
 
     @abc.abstractmethod
     def parse_info(self, emby_media_info):

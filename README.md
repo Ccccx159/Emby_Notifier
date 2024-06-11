@@ -22,6 +22,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v2.2.2 | 2024.06.11 | <li>1. 修复 tvdb id 环境变量为空时校验失败的问题；2. 修复 chat id 被设置为用户 id 导致的校验失败问题</li> |
 | v2.2.1 | 2024.05.30 | <li>1. 修复非首季剧集搜索失败问题。TMDB /search/tv 接口参数 "first_air_date_year" 特指 “首季” 的初次发布年份，后续季发布年份不同于首季时，使用该字段出现搜索失败的情况，将搜索参数修改为 "year" 修复该问题。</li> |
 | v2.2.0 | 2024.05.24 | <li>1. 增加必填参数有效性校验，基于 TMDB authorization 和 tgbot getMe method 等方法进行认证，通过后才启动服务</li><li>2. 将 TVDB_API_KEY 修改为 “可选”，兼容性修改。使用过程中出现 Server 的通知消息中无 ProviderIds 信息，tvdb api 请求返回 502 等情况，导致服务不够稳定，为了提高兼容性，将 TVDB_API_KEY 设置为可选配置，若配置，则对于有 tvdb_id 且无 tmdb_id 的影片可以有效提高信息检索准确性</li><li>3. 优化部分 Requests 请求的异常处理</li> |
 | v2.1.0 | 2024.05.22 | <li>1. 新增测试 message 推送，当Emby Server发送测试通知时，将消息推送到对应 tg chat。仅输出日志容易导致使用者误解为无响应</li><li>2. 修改 README 中对 TMDB_API_TOKEN 的中文解释为 "API 读访问令牌"</li><li>3. tgbot sendmessage 方法新增异常信息打印</li><li>4. 修复日志文件默认路径错误，并当设置LOG_EXPORT=True时，将欢迎信息同步写入日志文件</li> |
