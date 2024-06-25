@@ -56,7 +56,9 @@ def search_media(media_type, name, year):
     media_type = (
         TMDB_MEDIA_TYPES[media_type] if media_type in TMDB_MEDIA_TYPES else media_type
     )
-    search_url = f"{TMDB_API}/search/{media_type}?query={name}&year={year}&language={TMDB_LANG}&page=1"
+    search_url = f"{TMDB_API}/search/{media_type}?query={name}&language={TMDB_LANG}&page=1"
+    if year != -1:
+        search_url += f"&year={year}"
     try:
         response = requests.get(search_url, headers=TMDB_API_HEADERS)
         response.raise_for_status()

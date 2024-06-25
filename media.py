@@ -5,6 +5,9 @@ import abc, json, time
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
 
+from datetime import datetime
+
+
 class IMedia(abc.ABC):
 
     def __init__(self):
@@ -28,7 +31,7 @@ class IMedia(abc.ABC):
         )
         self.poster_ = ""
         self.server_name_ = ""
-        self.escape_ch = ['_', '*', '`', '[']
+        self.escape_ch = ["_", "*", "`", "["]
 
     @abc.abstractmethod
     def parse_info(self, emby_media_info):
@@ -86,7 +89,13 @@ class Movie(IMedia):
         self.info_["PremiereYear"] = (
             int(movie_item["PremiereDate"])
             if movie_item["PremiereDate"].isdigit()
-            else my_utils.iso8601_convert_CST(movie_item["PremiereDate"]).year
+            else (
+                datetime.fromisoformat(
+                    movie_item["PremiereDate"].replace("Z", "+00:00")
+                ).year
+                if my_utils.emby_version_check(emby_media_info["Server"]["Version"])
+                else my_utils.iso8601_convert_CST(movie_item["PremiereDate"]).year
+            )
         )
         self.info_["ProviderIds"] = movie_item["ProviderIds"]
         self.server_name_ = emby_media_info["Server"]["Name"]
@@ -142,11 +151,21 @@ class Episode(IMedia):
     def parse_info(self, emby_media_info):
         episode_item = emby_media_info["Item"]
         self.info_["Name"] = episode_item["SeriesName"]
-        self.info_["PremiereYear"] = (
-            int(episode_item["PremiereDate"])
-            if episode_item["PremiereDate"].isdigit()
-            else my_utils.iso8601_convert_CST(episode_item["PremiereDate"]).year
-        )
+        try:
+            self.info_["PremiereYear"] = (
+                int(episode_item["PremiereDate"])
+                if episode_item["PremiereDate"].isdigit()
+                else (
+                    datetime.fromisoformat(
+                        episode_item["PremiereDate"].replace("Z", "+00:00")
+                    ).year
+                    if my_utils.emby_version_check(emby_media_info["Server"]["Version"])
+                    else my_utils.iso8601_convert_CST(episode_item["PremiereDate"]).year
+                )
+            )
+        except Exception as e:
+            log.logger.error(e)
+            self.info_["PremiereYear"] = -1
         self.info_["ProviderIds"] = episode_item["ProviderIds"]
         self.info_["Series"] = episode_item["IndexNumber"]
         self.info_["Season"] = episode_item["ParentIndexNumber"]
@@ -161,6 +180,10 @@ class Episode(IMedia):
                 self.info_["ProviderIds"].pop("Tvdb")
             else:
                 self.info_["ProviderIds"]["Tvdb"] = str(tvdb_id)
+
+        if "Tmdb" in self.info_["ProviderIds"]:
+            # remove
+            self.info_["ProviderIds"].pop("Tmdb")
 
         self._get_id()
         tv_details, err = tmdb_api.get_tv_episode_details(
@@ -218,8 +241,8 @@ def create_media(emby_media_info):
 
 def jellyfin_msg_preprocess(msg):
     # jellyfin msg 部分字段中包含 "\n"，不处理会导致 json.loads() 失败
-    if '\n' in msg:
-        msg = msg.replace('\n', '')
+    if "\n" in msg:
+        msg = msg.replace("\n", "")
     original_msg = json.loads(msg)
     # 通过字段 "NotificationType" 判断当前是否为 Jellyfin 事件
     if "NotificationType" in original_msg:
