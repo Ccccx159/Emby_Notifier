@@ -26,3 +26,24 @@ def contains_unicode_escape(s):
     bool: True if the string contains Unicode escape sequences, False otherwise.
   """
   return re.search(r"\\u[0-9a-fA-F]{4}", s) is not None
+
+def emby_version_check(version):
+  """
+  Checks if the Emby version is greater than or equal to 4.8.1.0.
+
+  Args:
+    version (str): The Emby version to check.
+
+  Returns:
+    bool: True if the Emby version is greater than or equal to 4.8.1.0, False otherwise.
+  """
+  ver_4810 = [4, 8, 1, 0]
+  ver = list(map(int, version.split('.')))
+  len_diff = len(ver) - len(ver_4810)
+  if len_diff > 0:
+    ver_4810.extend([0] * len_diff)
+  elif len_diff < 0:
+    ver.extend([0] * abs(len_diff))
+  return ver >= ver_4810
+
+  
