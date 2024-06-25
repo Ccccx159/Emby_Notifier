@@ -53,7 +53,7 @@ def get_seriesid_by_episodeid(episode_id):
         str: An error message if the request fails.
     """
     global TVDB_API_TOKEN
-    log.logger.error(f"TVDB_API_TOKEN: {TVDB_API_TOKEN}, TVDB_API_KEY: {TVDB_API_KEY}")
+    log.logger.debug(f"TVDB_API_TOKEN: {TVDB_API_TOKEN}, TVDB_API_KEY: {TVDB_API_KEY}")
     for _ in range(2):
         if TVDB_API_TOKEN == "" or TVDB_API_TOKEN is None:
             TVDB_API_TOKEN, err = login()
