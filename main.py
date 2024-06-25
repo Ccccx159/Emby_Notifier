@@ -6,8 +6,8 @@ import log, my_httpd, tmdb_api, tvdb_api, tgbot
 import os, time
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "2.2.2"
-UPDATETIME = "2024-06-11"
+VERSION = "2.2.3"
+UPDATETIME = "2024-06-26"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
