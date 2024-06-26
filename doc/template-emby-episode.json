@@ -1,0 +1,257 @@
+{
+  "tv": [
+    {
+      "Title": "新 神雕侠侣 (1995) - S1, Ep2 - 故人之子 在 46c89a983401",
+      "Description": "儒文双英在过的洞中又吃又住，过要他们付帐。愁跟三夫妇来洞穴，要杀元女泄愤，三不敌，中针倒地，过用计使各人脱险，但最后二女被愁掳去。过不慎接触毒针，欧阳锋来救他，但要过认他作父，后更传蛤蟆功给杨过。郭靖、黄蓉遇过，蓉认出他是杨康之子，又因武三娘中毒死去，靖便把过和儒文兄弟带回桃花岛，希望过能在岛上长大成人。",
+      "Date": "2024-06-26T10:10:25.2607497Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "故人之子",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "1718",
+        "DateCreated": "2021-07-16T15:38:12.0195950Z",
+        "Container": "mkv",
+        "SortName": "故人之子",
+        "PremiereDate": "1995-08-01T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt8189092"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/?tab=episode&id=4768466"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/imdb/tt8189092"
+          }
+        ],
+        "Path": "/mnt/share1/神雕侠侣(1995)/S01/Return.of.The.Condor.Heroes.1995.S01.E02.2160P(4K).WEB-DL.H265.AAC.2Audios-Vampire.mkv",
+        "Overview": "儒文双英在过的洞中又吃又住，过要他们付帐。愁跟三夫妇来洞穴，要杀元女泄愤，三不敌，中针倒地，过用计使各人脱险，但最后二女被愁掳去。过不慎接触毒针，欧阳锋来救他，但要过认他作父，后更传蛤蟆功给杨过。郭靖、黄蓉遇过，蓉认出他是杨康之子，又因武三娘中毒死去，靖便把过和儒文兄弟带回桃花岛，希望过能在岛上长大成人。",
+        "Taglines": [],
+        "Genres": [
+          "Action",
+          "Adventure",
+          "Drama"
+        ],
+        "RunTimeTicks": 27318990000,
+        "Size": 2706347790,
+        "FileName": "Return.of.The.Condor.Heroes.1995.S01.E02.2160P(4K).WEB-DL.H265.AAC.2Audios-Vampire.mkv",
+        "Bitrate": 7925176,
+        "ProductionYear": 1995,
+        "IndexNumber": 2,
+        "ParentIndexNumber": 1,
+        "RemoteTrailers": [],
+        "ProviderIds": {
+          "Tvdb": "4768466",
+          "Imdb": "tt8189092"
+        },
+        "IsFolder": false,
+        "ParentId": "1716",
+        "Type": "Episode",
+        "Studios": [],
+        "GenreItems": [
+          {
+            "Name": "Action",
+            "Id": 1816
+          },
+          {
+            "Name": "Adventure",
+            "Id": 1817
+          },
+          {
+            "Name": "Drama",
+            "Id": 1834
+          }
+        ],
+        "TagItems": [],
+        "ParentLogoItemId": "1708",
+        "ParentBackdropItemId": "1708",
+        "ParentBackdropImageTags": [
+          "474beccf76df6b2dc897fa537bf57eb3"
+        ],
+        "SeriesName": "神雕侠侣 (1995)",
+        "SeriesId": "1708",
+        "SeasonId": "1716",
+        "PrimaryImageAspectRatio": 1.7777777777777777,
+        "SeriesPrimaryImageTag": "e9d6acf3e50b107c0e3057dbb14797b6",
+        "SeasonName": "第 1 季",
+        "ImageTags": {
+          "Primary": "e9d1f9ec17824696a7a7ac087052f2f7"
+        },
+        "BackdropImageTags": [],
+        "ParentLogoImageTag": "285929a2deec7a985da35cfba1555e86",
+        "MediaType": "Video",
+        "Width": 2796,
+        "Height": 2160
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    },
+    {
+      "Title": "新 长风渡 - S1, Ep1 - 第1集 在 46c89a983401",
+      "Description": "大荣立朝，迄今不过两代。如今大荣皇帝缠绵病榻，中央对地方的控制日渐虚弱，国库亏空。十三州节度使割据，拥兵自重。风平浪静的表象之下，隐隐有暗流涌动。然而，这种山雨欲来的肃杀气氛，暂时似乎并未影响到一派富丽锦绣的徉州城。 徉州城内，对于十六岁的少女柳玉茹来说，她此时唯一挂心的事，便是叶家大公子叶世安不知何时归来。",
+      "Date": "2024-06-26T10:10:25.2606851Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "第1集",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "1715",
+        "DateCreated": "2023-09-01T02:25:38.3483099Z",
+        "Container": "mp4",
+        "SortName": "第1集",
+        "PremiereDate": "2023-06-18T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/?tab=episode&id=9584007"
+          }
+        ],
+        "Path": "/mnt/share1/长风渡(2023)/S01/Destined.2023.S01.E01.Episode.1.WEBDL-1080p.AVC.8bit.EAC3.5.1-长风渡.mp4",
+        "Overview": "大荣立朝，迄今不过两代。如今大荣皇帝缠绵病榻，中央对地方的控制日渐虚弱，国库亏空。十三州节度使割据，拥兵自重。风平浪静的表象之下，隐隐有暗流涌动。然而，这种山雨欲来的肃杀气氛，暂时似乎并未影响到一派富丽锦绣的徉州城。 徉州城内，对于十六岁的少女柳玉茹来说，她此时唯一挂心的事，便是叶家大公子叶世安不知何时归来。",
+        "Taglines": [],
+        "Genres": [],
+        "RunTimeTicks": 28861550000,
+        "Size": 773723825,
+        "FileName": "Destined.2023.S01.E01.Episode.1.WEBDL-1080p.AVC.8bit.EAC3.5.1-长风渡.mp4",
+        "Bitrate": 2144649,
+        "ProductionYear": 2023,
+        "IndexNumber": 1,
+        "ParentIndexNumber": 1,
+        "RemoteTrailers": [],
+        "ProviderIds": {
+          "Tvdb": "9584007"
+        },
+        "IsFolder": false,
+        "ParentId": "1712",
+        "Type": "Episode",
+        "Studios": [],
+        "GenreItems": [],
+        "TagItems": [],
+        "ParentLogoItemId": "1707",
+        "ParentBackdropItemId": "1707",
+        "ParentBackdropImageTags": [
+          "580c76b83c53ba2c711d8b2569407fad"
+        ],
+        "SeriesName": "长风渡",
+        "SeriesId": "1707",
+        "SeasonId": "1712",
+        "PrimaryImageAspectRatio": 1.7777777777777777,
+        "SeriesPrimaryImageTag": "e4e94715ddd4fc5552166c8f288fb683",
+        "SeasonName": "第 1 季",
+        "ImageTags": {
+          "Primary": "5f68daffa52c5f52656e04d1903495cf"
+        },
+        "BackdropImageTags": [],
+        "ParentLogoImageTag": "9af22b5501b8d55f5da5a867000f01d1",
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 800
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    },
+    {
+      "Title": "新 幽游白书 - S1, Ep2 - Episode 2 在 46c89a983401",
+      "Description": "Rogue yokai steal three dangerous objects; as Yusuke grapples with his new powers, children playing at a park mysteriously collapse to the ground.",
+      "Date": "2024-06-26T10:10:25.2606138Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "Episode 2",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "1711",
+        "DateCreated": "2024-05-24T18:58:22.7925371Z",
+        "Container": "mp4",
+        "SortName": "Episode 2",
+        "PremiereDate": "2023-12-14T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt14920270"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/?tab=episode&id=10139634"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/imdb/tt14920270"
+          }
+        ],
+        "Path": "/mnt/share1/幽游白书(2023)/S01/Yu.Yu.Hakusho.2023.S01.E02.Episode.2.WEBDL-1080p.x264.8bit.EAC3.5.1-AOC.mp4",
+        "Overview": "Rogue yokai steal three dangerous objects; as Yusuke grapples with his new powers, children playing at a park mysteriously collapse to the ground.",
+        "Taglines": [],
+        "Genres": [
+          "Action",
+          "Adventure",
+          "Comedy"
+        ],
+        "CommunityRating": 7.6,
+        "RunTimeTicks": 26772800000,
+        "Size": 3539377897,
+        "FileName": "Yu.Yu.Hakusho.2023.S01.E02.Episode.2.WEBDL-1080p.x264.8bit.EAC3.5.1-AOC.mp4",
+        "Bitrate": 10576041,
+        "ProductionYear": 2023,
+        "IndexNumber": 2,
+        "ParentIndexNumber": 1,
+        "RemoteTrailers": [],
+        "ProviderIds": {
+          "Tvdb": "10139634",
+          "Imdb": "tt14920270"
+        },
+        "IsFolder": false,
+        "ParentId": "1709",
+        "Type": "Episode",
+        "Studios": [],
+        "GenreItems": [
+          {
+            "Name": "Action",
+            "Id": 1816
+          },
+          {
+            "Name": "Adventure",
+            "Id": 1817
+          },
+          {
+            "Name": "Comedy",
+            "Id": 1818
+          }
+        ],
+        "TagItems": [],
+        "ParentLogoItemId": "1706",
+        "ParentBackdropItemId": "1706",
+        "ParentBackdropImageTags": [
+          "3e365d58f2cbf26cbfd4ef3bee8e608a"
+        ],
+        "SeriesName": "幽游白书",
+        "SeriesId": "1706",
+        "SeasonId": "1709",
+        "PrimaryImageAspectRatio": 1.7777777777777777,
+        "SeriesPrimaryImageTag": "7f228daf324f3c99ec9aba09e7407e7d",
+        "SeasonName": "第 1 季",
+        "ImageTags": {
+          "Primary": "200315a5dd69dc732cc1439b8c55111d"
+        },
+        "BackdropImageTags": [],
+        "ParentLogoImageTag": "942d53b691d47d193c7acd701580e1fb",
+        "ParentThumbItemId": "1706",
+        "ParentThumbImageTag": "993aa698cac97b53b34eb59ee888ef85",
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    }
+  ]
+}

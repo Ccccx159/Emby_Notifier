@@ -1,5 +1,5 @@
 *.env
-*.json
+test*.json
 *.log
 __pycache__/
 *.pyc

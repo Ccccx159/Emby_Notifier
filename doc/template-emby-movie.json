@@ -1,0 +1,453 @@
+{
+  "mv": [
+    {
+      "Title": "新 哈利·波特20周年：回到霍格沃茨 在 46c89a983401",
+      "Description": "《哈利波特》首集电影上映20周年！为此官方精心安排特别节目《哈利波特20周年：重返霍格华兹》，向魔法世界的幕后创造者——华纳兄弟与其电影制作团队致敬。节目邀请来了当初出演的众演员，一同分享拍摄现场的回忆，并以观众未曾领略的幕后视角，回顾大家心中经典的魔法时刻。",
+      "Date": "2024-06-26T09:46:20.8464848Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "哈利·波特20周年：回到霍格沃茨",
+        "OriginalTitle": "Harry Potter 20th Anniversary: Return to Hogwarts",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "568",
+        "DateCreated": "2024-03-04T18:19:58.0000000Z",
+        "Container": "mpegts",
+        "SortName": "哈利·波特20周年：回到霍格沃茨",
+        "PremiereDate": "2022-01-01T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt16116174"
+          },
+          {
+            "Name": "MovieDb",
+            "Url": "https://www.themoviedb.org/movie/899082"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/dereferrer/movie/318407"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/tmdb/899082?id_type=movie"
+          }
+        ],
+        "CriticRating": 93,
+        "Path": "/mnt/share2/Harry.Potter.20th.Anniversary-.Return.to.Hogwarts(2022)/Harry.Potter.20th.Anniversary-.Return.to.Hogwarts.2022.ENG.1080p.HD.WEBRip.1.47GiB.AAC.x264-PortalGoods.ts",
+        "OfficialRating": "PG-13",
+        "Overview": "《哈利波特》首集电影上映20周年！为此官方精心安排特别节目《哈利波特20周年：重返霍格华兹》，向魔法世界的幕后创造者——华纳兄弟与其电影制作团队致敬。节目邀请来了当初出演的众演员，一同分享拍摄现场的回忆，并以观众未曾领略的幕后视角，回顾大家心中经典的魔法时刻。",
+        "Taglines": [
+          "Welcome back to where the magic began."
+        ],
+        "Genres": [
+          "纪录"
+        ],
+        "CommunityRating": 8,
+        "RunTimeTicks": 61762534110,
+        "Size": 1575861120,
+        "FileName": "Harry.Potter.20th.Anniversary-.Return.to.Hogwarts.2022.ENG.1080p.HD.WEBRip.1.47GiB.AAC.x264-PortalGoods.ts",
+        "Bitrate": 2041187,
+        "ProductionYear": 2022,
+        "RemoteTrailers": [
+          {
+            "Url": "https://www.youtube.com/watch?v=fFGS4zZWGoA"
+          }
+        ],
+        "ProviderIds": {
+          "Imdb": "tt16116174",
+          "Tvdb": "318407",
+          "Tmdb": "899082"
+        },
+        "IsFolder": false,
+        "ParentId": "564",
+        "Type": "Movie",
+        "Studios": [
+          {
+            "Name": "Pulse Films",
+            "Id": 602
+          },
+          {
+            "Name": "Warner Horizon Unscripted Television",
+            "Id": 603
+          },
+          {
+            "Name": "Casey Patterson Entertainment",
+            "Id": 604
+          }
+        ],
+        "GenreItems": [
+          {
+            "Name": "纪录",
+            "Id": 601
+          }
+        ],
+        "TagItems": [],
+        "PrimaryImageAspectRatio": 0.7,
+        "ImageTags": {
+          "Primary": "f4ba03846d9eea68dadff16a001fdddf",
+          "Logo": "dc75034ad89f54f56edde455d87f8e9a",
+          "Thumb": "dd3a7eb86f3421ae1c9b2a290b5f5eeb"
+        },
+        "BackdropImageTags": [
+          "95235c1a08a5c2597fb918138cd8f213"
+        ],
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    },
+    {
+      "Title": "新 门徒 在 46c89a983401",
+      "Description": "生活在香港的昆哥(刘德华饰演)表面上脯经营着一家小店做小生意，其真实身份却是掌叼控着庞大誊贩毒脉络的毒枭老大，他的妻子(袁咏仪饰演)已经有了两个女儿，如今又身怀六甲，这让昆哥产生了金盆洗手的想法。其实她的妻子对他的毒枭背景早以心知肚明，只是为了家庭，一直未吐露出来。阿力(吴彦祖饰演)是跟随昆哥多年的“门徒”，他的真是身份其实是警方的卧底。虽然得到昆哥的信任，可一直以来却始终掌握不到关于制毒贩毒的详细情况，这让他非常苦恼，就在他灰心丧气的时候，昆哥忽然要带他去东南亚深入制毒的秘密基地…… 古天乐和张静初在片中饰演一对夫妻，古天乐饰演的丈夫是个瘾君子，妻子阿芬(张静初饰演)为了向丈夫证明人是可以戒毒的，从而也染上了毒瘾。为了便于自己吸毒，丧尽天良的丈夫居然逼迫自己的老婆和三岁的女儿替自己贩毒。而阿芬在渴望戒毒的时候偶然结识了阿力，两人不知不觉发生一段微妙的情感纠葛……",
+      "Date": "2024-06-26T09:46:23.7587664Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "门徒",
+        "OriginalTitle": "門徒",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "569",
+        "DateCreated": "2023-08-08T00:47:29.0000000Z",
+        "Container": "mp4",
+        "SortName": "门徒",
+        "PremiereDate": "2007-04-13T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt0841150"
+          },
+          {
+            "Name": "MovieDb",
+            "Url": "https://www.themoviedb.org/movie/16657"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/dereferrer/movie/17184"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/tmdb/16657?id_type=movie"
+          }
+        ],
+        "Path": "/mnt/share2/门徒(2007)/Protégé.2007.Bluray-1080p.h264.8bit.AAC.5.1.Radarr.mp4",
+        "OfficialRating": "R",
+        "Overview": "生活在香港的昆哥(刘德华饰演)表面上脯经营着一家小店做小生意，其真实身份却是掌叼控着庞大誊贩毒脉络的毒枭老大，他的妻子(袁咏仪饰演)已经有了两个女儿，如今又身怀六甲，这让昆哥产生了金盆洗手的想法。其实她的妻子对他的毒枭背景早以心知肚明，只是为了家庭，一直未吐露出来。阿力(吴彦祖饰演)是跟随昆哥多年的“门徒”，他的真是身份其实是警方的卧底。虽然得到昆哥的信任，可一直以来却始终掌握不到关于制毒贩毒的详细情况，这让他非常苦恼，就在他灰心丧气的时候，昆哥忽然要带他去东南亚深入制毒的秘密基地…… 古天乐和张静初在片中饰演一对夫妻，古天乐饰演的丈夫是个瘾君子，妻子阿芬(张静初饰演)为了向丈夫证明人是可以戒毒的，从而也染上了毒瘾。为了便于自己吸毒，丧尽天良的丈夫居然逼迫自己的老婆和三岁的女儿替自己贩毒。而阿芬在渴望戒毒的时候偶然结识了阿力，两人不知不觉发生一段微妙的情感纠葛……",
+        "Taglines": [],
+        "Genres": [
+          "剧情",
+          "惊悚"
+        ],
+        "CommunityRating": 7.2,
+        "RunTimeTicks": 65309540000,
+        "Size": 3547500274,
+        "FileName": "Protégé.2007.Bluray-1080p.h264.8bit.AAC.5.1.Radarr.mp4",
+        "Bitrate": 4345460,
+        "ProductionYear": 2007,
+        "RemoteTrailers": [
+          {
+            "Url": "https://www.youtube.com/watch?v=41kTbNGYkwU"
+          }
+        ],
+        "ProviderIds": {
+          "Imdb": "tt0841150",
+          "Tvdb": "17184",
+          "Tmdb": "16657"
+        },
+        "IsFolder": false,
+        "ParentId": "565",
+        "Type": "Movie",
+        "Studios": [
+          {
+            "Name": "China Film Group Corporation",
+            "Id": 623
+          },
+          {
+            "Name": "MediaCorp Raintree Pictures",
+            "Id": 624
+          },
+          {
+            "Name": "Artforce International",
+            "Id": 625
+          },
+          {
+            "Name": "Beijing Jinyinma Movie & TV Culture Co.",
+            "Id": 626
+          },
+          {
+            "Name": "Bona Film Group",
+            "Id": 627
+          }
+        ],
+        "GenreItems": [
+          {
+            "Name": "剧情",
+            "Id": 621
+          },
+          {
+            "Name": "惊悚",
+            "Id": 622
+          }
+        ],
+        "TagItems": [],
+        "PrimaryImageAspectRatio": 0.6666666666666666,
+        "ImageTags": {
+          "Primary": "38c31a0335124c2f6030cae6a2305c9e",
+          "Logo": "caaa23720f48dc57f8d89b8a5c3cd342"
+        },
+        "BackdropImageTags": [
+          "4724656064d2ec559962bdd8d541514a"
+        ],
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    },
+    {
+      "Title": "新 怒火·重案 在 46c89a983401",
+      "Description": "重案组布网围剿国际毒枭，突然杀出一组蒙面悍匪“黑吃黑”，更冷血屠杀众警察。重案组督察张崇邦亲睹战友被杀，深入追查发现，悍匪首领竟是昔日战友邱刚敖。原来敖也曾是警队明日之星，而将敖推向罪恶深渊的人，却正是邦。宿命令二人再次纠缠，一切恩怨张崇邦如何作出了断。",
+      "Date": "2024-06-26T09:46:25.6102318Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "怒火·重案",
+        "OriginalTitle": "怒火",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "570",
+        "DateCreated": "2022-08-17T23:06:43.0000000Z",
+        "Container": "mkv",
+        "SortName": "怒火·重案",
+        "PremiereDate": "2021-07-28T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt8165192"
+          },
+          {
+            "Name": "MovieDb",
+            "Url": "https://www.themoviedb.org/movie/513692"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/dereferrer/movie/16676"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/tmdb/513692?id_type=movie"
+          }
+        ],
+        "CriticRating": 91,
+        "Path": "/mnt/share2/怒火·重案(2021)/Crossfire.2021.1080p.WEB-DL.H264.2Audios-TJUPT.mkv",
+        "OfficialRating": "NR",
+        "Overview": "重案组布网围剿国际毒枭，突然杀出一组蒙面悍匪“黑吃黑”，更冷血屠杀众警察。重案组督察张崇邦亲睹战友被杀，深入追查发现，悍匪首领竟是昔日战友邱刚敖。原来敖也曾是警队明日之星，而将敖推向罪恶深渊的人，却正是邦。宿命令二人再次纠缠，一切恩怨张崇邦如何作出了断。",
+        "Taglines": [],
+        "Genres": [
+          "动作",
+          "犯罪"
+        ],
+        "CommunityRating": 6.5,
+        "RunTimeTicks": 77094660000,
+        "Size": 3135687333,
+        "FileName": "Crossfire.2021.1080p.WEB-DL.H264.2Audios-TJUPT.mkv",
+        "Bitrate": 3253856,
+        "ProductionYear": 2021,
+        "RemoteTrailers": [
+          {
+            "Url": "https://www.youtube.com/watch?v=rX_YV8HE6XM"
+          },
+          {
+            "Url": "https://www.youtube.com/watch?v=_hL0sAde1DA"
+          },
+          {
+            "Url": "https://www.youtube.com/watch?v=spy-dhYLRxI"
+          }
+        ],
+        "ProviderIds": {
+          "Imdb": "tt8165192",
+          "Tvdb": "16676",
+          "Tmdb": "513692"
+        },
+        "IsFolder": false,
+        "ParentId": "566",
+        "Type": "Movie",
+        "Studios": [
+          {
+            "Name": "Tencent Pictures",
+            "Id": 650
+          },
+          {
+            "Name": "Emperor Film Production",
+            "Id": 651
+          },
+          {
+            "Name": "Super Bullet Pictures",
+            "Id": 652
+          }
+        ],
+        "GenreItems": [
+          {
+            "Name": "动作",
+            "Id": 648
+          },
+          {
+            "Name": "犯罪",
+            "Id": 649
+          }
+        ],
+        "TagItems": [],
+        "PrimaryImageAspectRatio": 0.75,
+        "ImageTags": {
+          "Primary": "3093b55b1fb2f46aa5e0b336478181b6",
+          "Logo": "77a90e7525e51a9060ce07d364e14255",
+          "Thumb": "cd90c0053609d24b42089100ffeab9d4"
+        },
+        "BackdropImageTags": [
+          "fab55fdb3f1a71d796d35f184f85186d"
+        ],
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 800
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    },
+    {
+      "Title": "新 刀锋战士3 在 46c89a983401",
+      "Description": "这个世界上总是有两种势力，一方是邪恶的黑暗势力，而另一方则是永远和黑暗势力相抗争的正义的力量。黑暗势力似乎一刻都不会安宁，他们总是不甘心一直“黑暗”下去。在遥远的沙漠深处，吸血鬼的首领唤醒了沉睡七千年的吸血鬼德雷克(多米尼克·珀塞尔饰)，这位古老的吸血鬼家族的祖先因为纯正的血统而拥有吸血鬼后辈永远无法企及的超强法力，那就是阳光无法阻挡他的黑暗力量，对于其他吸血鬼来说是致命的阳光对他却没有任何的影响，他在白天还能自由行动。吸血鬼们将他唤醒的目的是希望通过对他基因的研究，找出吸血鬼对抗日光的秘密。",
+      "Date": "2024-06-26T09:46:29.0054906Z",
+      "Event": "library.new",
+      "Item": {
+        "Name": "刀锋战士3",
+        "OriginalTitle": "Blade: Trinity",
+        "ServerId": "1e42f547a683452097426ca9d044a2d9",
+        "Id": "571",
+        "DateCreated": "2022-01-26T00:01:25.0000000Z",
+        "Container": "mkv",
+        "SortName": "刀锋战士3",
+        "PremiereDate": "2004-12-08T00:00:00.0000000Z",
+        "ExternalUrls": [
+          {
+            "Name": "IMDb",
+            "Url": "https://www.imdb.com/title/tt0359013"
+          },
+          {
+            "Name": "MovieDb",
+            "Url": "https://www.themoviedb.org/movie/36648"
+          },
+          {
+            "Name": "TheTVDB",
+            "Url": "https://thetvdb.com/dereferrer/movie/1700"
+          },
+          {
+            "Name": "Trakt",
+            "Url": "https://trakt.tv/search/tmdb/36648?id_type=movie"
+          }
+        ],
+        "CriticRating": 25,
+        "Path": "/mnt/share2/刀锋战士3(2004)/Blade Trinity.2004.Bluray-1080p.DTS.5.1.x264.HDCLASSiCS.mkv",
+        "OfficialRating": "R",
+        "Overview": "这个世界上总是有两种势力，一方是邪恶的黑暗势力，而另一方则是永远和黑暗势力相抗争的正义的力量。黑暗势力似乎一刻都不会安宁，他们总是不甘心一直“黑暗”下去。在遥远的沙漠深处，吸血鬼的首领唤醒了沉睡七千年的吸血鬼德雷克(多米尼克·珀塞尔饰)，这位古老的吸血鬼家族的祖先因为纯正的血统而拥有吸血鬼后辈永远无法企及的超强法力，那就是阳光无法阻挡他的黑暗力量，对于其他吸血鬼来说是致命的阳光对他却没有任何的影响，他在白天还能自由行动。吸血鬼们将他唤醒的目的是希望通过对他基因的研究，找出吸血鬼对抗日光的秘密。",
+        "Taglines": [
+          "The final hunt begins."
+        ],
+        "Genres": [
+          "动作",
+          "恐怖",
+          "奇幻"
+        ],
+        "CommunityRating": 5.8,
+        "RunTimeTicks": 67728750000,
+        "Size": 8533847475,
+        "FileName": "Blade Trinity.2004.Bluray-1080p.DTS.5.1.x264.HDCLASSiCS.mkv",
+        "Bitrate": 10080029,
+        "ProductionYear": 2004,
+        "RemoteTrailers": [
+          {
+            "Url": "https://www.youtube.com/watch?v=qcHEDGs7eAY"
+          },
+          {
+            "Url": "https://www.youtube.com/watch?v=fPcNbsW69Eg"
+          }
+        ],
+        "ProviderIds": {
+          "Imdb": "tt0359013",
+          "Tvdb": "1700",
+          "Tmdb": "36648",
+          "TmdbCollection": "735",
+          "official website": "http://www.warnerbros.com/blade-trinity"
+        },
+        "IsFolder": false,
+        "ParentId": "567",
+        "Type": "Movie",
+        "Studios": [
+          {
+            "Name": "New Line Cinema",
+            "Id": 679
+          },
+          {
+            "Name": "Amen Ra Films",
+            "Id": 680
+          },
+          {
+            "Name": "Shawn Danielle Productions Ltd.",
+            "Id": 681
+          },
+          {
+            "Name": "Imaginary Forces",
+            "Id": 682
+          },
+          {
+            "Name": "Marvel Enterprises",
+            "Id": 683
+          },
+          {
+            "Name": "Peter Frankfurt Productions",
+            "Id": 684
+          }
+        ],
+        "GenreItems": [
+          {
+            "Name": "动作",
+            "Id": 648
+          },
+          {
+            "Name": "恐怖",
+            "Id": 677
+          },
+          {
+            "Name": "奇幻",
+            "Id": 678
+          }
+        ],
+        "TagItems": [],
+        "PrimaryImageAspectRatio": 0.6666666666666666,
+        "ImageTags": {
+          "Primary": "9fb25e37ad6768d154d9eed92776866d",
+          "Logo": "a830ca2684a36a57d4be1ff7770c62cf",
+          "Thumb": "d7c346e41e01635c0bf11dc5d73016a0"
+        },
+        "BackdropImageTags": [
+          "be16bc26dfdc94cdc5ca7e3cd483e4a2"
+        ],
+        "MediaType": "Video",
+        "Width": 1920,
+        "Height": 816
+      },
+      "Server": {
+        "Name": "46c89a983401",
+        "Id": "1e42f547a683452097426ca9d044a2d9",
+        "Version": "4.8.8.0"
+      }
+    }
+  ]
+}
