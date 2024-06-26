@@ -215,3 +215,32 @@ def get_tv_episode_details(tmdb_id, season_number, episode_number):
             f"Failed to fetch TV episode details for S{season_number}E{episode_number}. Error: {e}",
         )
 
+
+def get_movie_backdrop_path(tmdb_id):
+    """
+    Get the backdrop path for a movie based on its TMDB ID.
+
+    Args:
+        tmdb_id (int): The TMDB ID of the movie.
+
+    Returns:
+        tuple: A tuple containing the backdrop path (str) and an error message (str).
+               If the backdrop path is found, the error message will be None.
+               If the backdrop path is not found, the backdrop path will be None and the error message will contain the movie ID.
+    """
+    movie_details, err_info = get_movie_details(tmdb_id)
+    if movie_details:
+        backdrop_path = movie_details.get("backdrop_path")
+        if backdrop_path:
+            return f"https://image.tmdb.org/t/p/w500{backdrop_path}", None
+        return None, f"No backdrop path found for movie {tmdb_id}."
+    return None, err_info
+
+
+def get_tv_episode_still_paths(tmdb_id, season_number, episode_number):
+    episode_details, err = get_tv_episode_details(tmdb_id, season_number, episode_number)
+    if episode_details:
+        still = episode_details.get("still_path")
+        if still:
+            return f"https://image.tmdb.org/t/p/w500{still}", None
+        return None, f"No stills found for TV {tmdb_id} S{season_number}E{episode_number}."

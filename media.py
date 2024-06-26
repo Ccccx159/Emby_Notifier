@@ -4,6 +4,8 @@
 import abc, json, time
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
+import sender
+from sender import Sender
 
 from datetime import datetime
 
@@ -19,16 +21,23 @@ class IMedia(abc.ABC):
             "Series": 0,
             "Season": 0,
         }
-        self.caption_ = (
-            "#影视更新 #{server_name}\n"
-            + "\[{type_ch}]\n"
-            + "片名： *{title}* ({year})\n"
-            + "{episode}"
-            + "评分： {rating}\n\n"
-            + "上映日期： {rel}\n\n"
-            + "内容简介： {intro}\n\n"
-            + "相关链接： [TMDB](https://www.themoviedb.org/{type}/{tmdbid}?language=zh-CN)\n"
-        )
+        self.media_detail_ = {
+            "server_type": "Emby/Jellyfin",
+            "server_url": "https://emby.example.com",
+            "server_name": "My_Emby_Server",
+            "media_name": "movie_name",
+            "media_type": "Movie/Episode",
+            "media_rating": 0.0,
+            "media_rel": "1970-01-01",
+            "media_intro": "This is a movie/episode introduction.",
+            "media_tmdburl": "https://www.themoviedb.org/movie(tv)/123456?language=zh-CN",
+            "media_poster": "https://image.tmdb.org/t/p/w500/sFeFWK3SI662yC2sx4clmWttWVj.jpg",
+            "media_backdrop": "https://image.tmdb.org/t/p/w500/sFeFWK3SI662yC2sx4clmWttWVj.jpg",
+            "media_still": "https://image.tmdb.org/t/p/w500/sFeFWK3SI662yC2sx4clmWttWVj.jpg",
+            "tv_season": 0,
+            "tv_episode": 0,
+            "tv_episode_name": "episode_name",
+        }
         self.poster_ = ""
         self.server_name_ = ""
         self.escape_ch = ["_", "*", "`", "["]
@@ -38,11 +47,7 @@ class IMedia(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_caption(self):
-        pass
-
-    @abc.abstractmethod
-    def get_poster(self):
+    def get_details(self):
         pass
 
     @abc.abstractmethod
@@ -98,10 +103,14 @@ class Movie(IMedia):
             )
         )
         self.info_["ProviderIds"] = movie_item["ProviderIds"]
-        self.server_name_ = emby_media_info["Server"]["Name"]
+        self.media_detail_["server_type"] = emby_media_info["Server"]["Type"]
+        self.media_detail_["server_name"] = emby_media_info["Server"]["Name"]
         log.logger.debug(self.info_)
 
-    def get_caption(self):
+    def send_caption(self):
+        sender.Sender.send_media_details(self.media_detail_)
+
+    def get_details(self):
         if "Tmdb" not in self.info_["ProviderIds"]:
             self._get_id()
 
@@ -112,32 +121,25 @@ class Movie(IMedia):
             log.logger.error(err)
             raise Exception(err)
         
-        # check server name and escape any special characters
-        for ch in self.escape_ch:
-            self.server_name_ = self.server_name_.replace(ch, "\\" + ch)
-
-        self.caption_ = self.caption_.format(
-            server_name=self.server_name_,
-            type_ch="电影",
-            title=movie_details["title"],
-            year=movie_details["release_date"][:4],
-            episode="",
-            rating=movie_details["vote_average"],
-            rel=movie_details["release_date"],
-            intro=movie_details["overview"],
-            type="movie",
-            tmdbid=self.info_["ProviderIds"]["Tmdb"],
-        )
-        log.logger.debug(self.caption_)
-
-    def get_poster(self):
-        self.poster_, err = tmdb_api.get_movie_poster(self.info_["ProviderIds"]["Tmdb"])
+        poster, err = tmdb_api.get_movie_poster(self.info_["ProviderIds"]["Tmdb"])
+        if err:
+            log.logger.error(err)
+            raise Exception(err)
+        
+        backdrop, err = tmdb_api.get_movie_backdrop_path(self.info_["ProviderIds"]["Tmdb"])
         if err:
             log.logger.error(err)
             raise Exception(err)
 
-    def send_caption(self):
-        tgbot.send_photo(self.caption_, self.poster_)
+        self.media_detail_["media_name"] = movie_details["title"]
+        self.media_detail_["media_type"] = "Movie"
+        self.media_detail_["media_rating"] = movie_details["vote_average"]
+        self.media_detail_["media_rel"] = movie_details["release_date"]
+        self.media_detail_["media_intro"] = movie_details["overview"]
+        self.media_detail_["media_tmdburl"] = f"https://www.themoviedb.org/movie/{self.info_['ProviderIds']['Tmdb']}?language=zh-CN"
+        self.media_detail_["media_poster"] = poster
+        self.media_detail_["media_backdrop"] = backdrop
+        log.logger.debug(self.media_detail_)
 
 
 class Episode(IMedia):
@@ -169,10 +171,12 @@ class Episode(IMedia):
         self.info_["ProviderIds"] = episode_item["ProviderIds"]
         self.info_["Series"] = episode_item["IndexNumber"]
         self.info_["Season"] = episode_item["ParentIndexNumber"]
-        self.server_name_ = emby_media_info["Server"]["Name"]
+        self.media_detail_["server_type"] = emby_media_info["Server"]["Type"]
+        self.media_detail_["server_name"] = emby_media_info["Server"]["Name"]
+        self.media_detail_["server_url"] = emby_media_info["Server"]["Url"]
         log.logger.debug(self.info_)
 
-    def get_caption(self):
+    def get_details(self):
         if "Tvdb" in self.info_["ProviderIds"]:
             tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(self.info_["ProviderIds"]["Tvdb"])
             if err:
@@ -194,40 +198,35 @@ class Episode(IMedia):
         if err:
             log.logger.error(err)
             raise Exception(err)
-
-        # check server name and escape any special characters
-        for ch in self.escape_ch:
-            self.server_name_ = self.server_name_.replace(ch, "\\" + ch)
-
-        self.caption_ = self.caption_.format(
-            server_name=self.server_name_,
-            type_ch="剧集",
-            title=self.info_["Name"] + " " + tv_details["name"],
-            year=tv_details["air_date"][:4],
-            episode="已更新至 第{}季 第{}集\n".format(
-                tv_details["season_number"], tv_details["episode_number"]
-            ),
-            rating=tv_details["vote_average"],
-            rel=tv_details["air_date"],
-            intro=tv_details["overview"],
-            type="tv",
-            tmdbid=self.info_["ProviderIds"]["Tmdb"],
-        )
-        log.logger.debug(self.caption_)
-
-    def get_poster(self):
-        self.poster_, err = tmdb_api.get_tv_season_poster(
+        
+        poster, err = tmdb_api.get_tv_season_poster(
             self.info_["ProviderIds"]["Tmdb"], self.info_["Season"]
         )
         if err:
             log.logger.error(err)
             raise Exception(err)
+        
+        still, err = tmdb_api.get_tv_episode_still_paths(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"], self.info_["Series"])
+        if err:
+            log.logger.error(err)
+            raise Exception(err)
+        
+        self.media_detail_["media_name"] = self.info_["Name"]
+        self.media_detail_["media_type"] = "Episode"
+        self.media_detail_["media_rating"] = tv_details["vote_average"]
+        self.media_detail_["media_rel"] = tv_details["air_date"]
+        self.media_detail_["media_intro"] = tv_details["overview"]
+        self.media_detail_["media_tmdburl"] = f"https://www.themoviedb.org/tv/{self.info_['ProviderIds']['Tmdb']}?language=zh-CN"
+        self.media_detail_["media_poster"] = poster
+        self.media_detail_["media_still"] = still
+        self.media_detail_["tv_season"] = tv_details["season_number"]
+        self.media_detail_["tv_episode"] = tv_details["episode_number"]
+        self.media_detail_["tv_episode_name"] = tv_details["name"]
+        log.logger.debug(self.media_detail_)
+
 
     def send_caption(self):
-        if self.poster_:
-            tgbot.send_photo(self.caption_, self.poster_)
-        else:
-            tgbot.send_message(self.caption_)
+        sender.Sender.send_media_details(self.media_detail_)
 
 
 def create_media(emby_media_info):
@@ -261,11 +260,17 @@ def jellyfin_msg_preprocess(msg):
                 "ParentIndexNumber": 0,
                 "ProviderIds": {},  # {"Tvdb": "5406258", "Imdb": "tt16116174", "Tmdb": "899082"}
             },
-            "Server": {"Name": "server name"},
+            "Server": {
+                "Name": "server name",
+                "Type": "Jellyfin",
+                "Url": "Jellyfin server url",
+            },
         }
         jellyfin_msg["Server"]["Name"] = original_msg["ServerName"]
+        jellyfin_msg["Server"]["Type"] = "Jellyfin"
+        jellyfin_msg["Server"]["Url"] = original_msg["ServerUrl"]
         jellyfin_msg["Event"] = "library.new"
-        
+
         if original_msg["ItemType"] == "Movie":
             jellyfin_msg["Title"] = f"新 {original_msg['Name']} 在 {original_msg['ServerName']}"
             jellyfin_msg["Item"]["Type"] = "Movie"
@@ -291,8 +296,8 @@ def jellyfin_msg_preprocess(msg):
             log.logger.warning(f"Jellyfin Server not get any ProviderIds for Event: {jellyfin_msg['Title']}")
         return jellyfin_msg
     else:
+        original_msg["Server"]["Type"] = "Emby"
         return original_msg
-
 
 
 def process_media(emby_media_info):
@@ -304,7 +309,7 @@ def process_media(emby_media_info):
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
         if emby_media_info["Event"] == "system.notificationtest":
             log.logger.warning("This is a notification test message. Please check your Telegram chat, if you received a message from Emby Notifier, it works!")
-            tgbot.send_message(
+            Sender.send_test_msg(
                 f"🎉 *Congratulations!* 🎉 \n\nEmby Notifier worked! \n\nThis is a test message from *{emby_media_info['Server']['Name']}*! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~ \n\n{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
             )
 
@@ -312,8 +317,7 @@ def process_media(emby_media_info):
     try:
         md = create_media(emby_media_info)
         md.parse_info(emby_media_info)
-        md.get_caption()
-        md.get_poster()
+        md.get_details()
         md.send_caption()
     except Exception as e:
         raise e
