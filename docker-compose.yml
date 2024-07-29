@@ -17,6 +17,10 @@ services:
       - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
       - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/
+      - WECHAT_CORP_ID=xxxxx      # 企业微信：企业 id
+      - WECHAT_CORP_SECRET=xxxxxx # 企业微信：应用凭证秘钥
+      - WECHAT_AGENT_ID=xxxxx # 企业微信：应用 agentid
+      - WECHAT_USER_ID=xxxxxx # 企业微信：用户 id，不设置时默认为 “@all”
     network_mode: "bridge"
     ports:
       - "8000:8000"

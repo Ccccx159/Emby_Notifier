@@ -22,6 +22,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| Pre-v2.2.4 | 2024.06.26 | <li>1. 新增企业微信支持；</li>|
 | v2.2.3 | 2024.06.12 | <li>1. 兼容高版本 Emby Server 新增媒体事件通知的处理，包括修复 PremiereDate 和 剧集的 episode tmdb id 等兼容性导致的消息推送失败问题；</li><li>2. 修复 tvdb_api 中一处日志等级错误；</li>|
 | v2.2.2 | 2024.06.11 | <li>1. 修复 tvdb id 环境变量为空时校验失败的问题；</li><li>2. 修复 chat id 被设置为用户 id 导致的校验失败问题</li> |
 | v2.2.1 | 2024.05.30 | <li>1. 修复非首季剧集搜索失败问题。TMDB /search/tv 接口参数 "first_air_date_year" 特指 “首季” 的初次发布年份，后续季发布年份不同于首季时，使用该字段出现搜索失败的情况，将搜索参数修改为 "year" 修复该问题。</li> |
@@ -52,6 +53,10 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 | LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 INFO|
 | LOG_EXPORT | 可选 | 日志写文件标志 [True, False] 是否将日志输出到文件，默认 False|
 | LOG_PATH | 可选 | 日志文件保存路径，默认 /var/tmp/emby_notifier_tg |
+| WECHAT_CORP_ID | 可选 | （企业微信）企业 id |
+| WECHAT_CORP_SECRET | 可选 | （企业微信）应用的凭证秘钥 |
+| WECHAT_AGENT_ID | 可选 | （企业微信）应用 agentid |
+| WECHAT_USER_ID | 可选 | （企业微信）用户 id，默认为“@all” |
 
 ## docker Run
 
@@ -88,6 +93,10 @@ services:
       - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
       - LOG_PATH=/var/tmp/emby_notifier_tg/ # 默认 /var/tmp/emby_notifier_tg/
+      - WECHAT_CORP_ID=xxxxx      # 企业微信：企业 id
+      - WECHAT_CORP_SECRET=xxxxxx # 企业微信：应用凭证秘钥
+      - WECHAT_AGENT_ID=xxxxx # 企业微信：应用 agentid
+      - WECHAT_USER_ID=xxxxxx # 企业微信：用户 id，不设置时默认为 “@all”
     network_mode: "bridge"
     ports:
       - "8000:8000"
