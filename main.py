@@ -8,8 +8,8 @@ import sender
 from sender import Sender
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "3.0.0"
-UPDATETIME = "2024-07-29"
+VERSION = "3.0.1"
+UPDATETIME = "2024-08-10"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
@@ -74,7 +74,7 @@ def env_check():
             raise Exception("You must set up at least one notification method, such as a Telegram bot or a WeChat Work application.")
         if os.getenv('TG_BOT_TOKEN') and os.getenv('TG_CHAT_ID') is None:
             raise Exception("TG_CHAT_ID is required.")
-        if os.getenv('WECHAT_CORP_ID') and (os.getenv('WECHAT_CORP_SECRET') is None or os.getenv('WECHAT_AGENT_ID') is None or os.getenv('WECHAT_USER_ID') is None):
+        if os.getenv('WECHAT_CORP_ID') and (os.getenv('WECHAT_CORP_SECRET') is None or os.getenv('WECHAT_AGENT_ID') is None):
             raise Exception("Wechat Application config is not completed.")
     except Exception as e:
         log.logger.error(e)

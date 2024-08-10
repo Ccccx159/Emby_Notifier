@@ -309,7 +309,7 @@ def process_media(emby_media_info):
         log.logger.warning(f"Unsupported event type: {emby_media_info['Event']}")
         if emby_media_info["Event"] == "system.notificationtest":
             log.logger.warning("This is a notification test message. Please check your Telegram chat, if you received a message from Emby Notifier, it works!")
-            Sender.send_test_msg(
+            sender.Sender.send_test_msg(
                 f"🎉 *Congratulations!* 🎉 \n\nEmby Notifier worked! \n\nThis is a test message from *{emby_media_info['Server']['Name']}*! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~ \n\n{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
             )
 
