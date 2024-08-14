@@ -4,6 +4,8 @@ LABEL maintainer="Xu@nCh3n"
 
 ENV TZ=Asia/Shanghai LANG=zh_CN.UTF-8 PYTHONUNBUFFERED=1
 
+EXPOSE 8000
+
 RUN set -eux && \
         \
         apk --no-cache update && apk -U --no-cache add git && \
