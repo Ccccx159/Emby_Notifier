@@ -8,8 +8,8 @@ import sender
 from sender import Sender
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "3.0.1"
-UPDATETIME = "2024-08-10"
+VERSION = "3.0.2"
+UPDATETIME = "2024-08-18"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
@@ -96,12 +96,6 @@ def require_check():
         # check TMDB_API_TOKEN valid
         log.logger.info("Checking TMDB_API_TOKEN...")
         tmdb_api.login()
-        
-        # TODO: check TVDB_API_KEY valid
-        # log.logger.info("Checking TVDB_API_KEY...")
-        # token, err = tvdb_api.login()
-        # if not token:
-        #     raise Exception(err)
         
         # check TG_BOT_TOKEN valid
         log.logger.info("Checking TG_BOT_TOKEN...")

@@ -105,6 +105,7 @@ class Movie(IMedia):
         self.info_["ProviderIds"] = movie_item["ProviderIds"]
         self.media_detail_["server_type"] = emby_media_info["Server"]["Type"]
         self.media_detail_["server_name"] = emby_media_info["Server"]["Name"]
+        self.media_detail_["server_url"] = emby_media_info["Server"]["Url"]
         log.logger.debug(self.info_)
 
     def send_caption(self):
@@ -297,6 +298,8 @@ def jellyfin_msg_preprocess(msg):
         return jellyfin_msg
     else:
         original_msg["Server"]["Type"] = "Emby"
+        # emby 推送的媒体信息不包含 server url，当前默认直接设置为 https://emby.media
+        original_msg["Server"]["Url"] = "https://emby.media"
         return original_msg
 
 
