@@ -148,11 +148,16 @@ class SenderManager:
             try:
                 sender.send_welcome(welcome_message)
             except ValueError as e:
-                print(f"Error sending welcome message: {e}")
+                print(f"Error {sender} sending welcome message: {e}")
 
     def send_test_msg(self, test_content):
         for sender in self.senders:
-            sender.send_test_msg(test_content)
+            try:
+                sender.send_test_msg(test_content)
+            except:
+                log.logger.error(f"Error sending test message by {sender}")
+                log.logger.error(traceback.format_exc())
+                continue
 
     def send_media_details(self, media):
         for sender in self.senders:
