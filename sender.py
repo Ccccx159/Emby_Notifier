@@ -5,6 +5,7 @@ import requests, os, time
 import log
 import wxapp
 import tgbot
+import traceback
 
 Sender = None
 
@@ -21,6 +22,10 @@ class MessageSender:
 
 
 class TelegramSender(MessageSender):
+    # 设置str属性，用于标识发送者
+    def __str__(self):
+        return "Telegram"
+    
     def send_welcome(self, welcome: dict):
         msg = f"{welcome['content']}\nAuthor: {welcome['author']}\nVersion: {welcome['version']}\nUpdate Time: {welcome['update_time']}\nDescription: {welcome['intro']}\nRepository: {welcome['repo']}\n"
         for ch in ["_", "*", "`", "["]:
@@ -70,6 +75,9 @@ class TelegramSender(MessageSender):
 
 
 class WechatAppSender(MessageSender):
+    def __str__(self):
+        return "WechatApp"
+
     def send_welcome(self, welcome: dict):
         wxapp.send_welcome_card(welcome)
 
@@ -148,4 +156,9 @@ class SenderManager:
 
     def send_media_details(self, media):
         for sender in self.senders:
-            sender.send_media_details(media)
+            try:
+                sender.send_media_details(media)
+            except:
+                log.logger.error(f"Error sending media details by {sender}")
+                log.logger.error(traceback.format_exc())
+                continue
