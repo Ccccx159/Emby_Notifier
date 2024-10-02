@@ -210,7 +210,8 @@ class Episode(IMedia):
         still, err = tmdb_api.get_tv_episode_still_paths(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"], self.info_["Series"])
         if err:
             log.logger.error(err)
-            raise Exception(err)
+            log.logger.warning("No still path found. use poster instead.")
+            still = poster
         
         self.media_detail_["media_name"] = self.info_["Name"]
         self.media_detail_["media_type"] = "Episode"
