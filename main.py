@@ -8,8 +8,8 @@ import sender
 from sender import Sender
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "3.0.4"
-UPDATETIME = "2024-10-02"
+VERSION = "3.0.5"
+UPDATETIME = "2024-12-26"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
@@ -97,13 +97,14 @@ def require_check():
         log.logger.info("Checking TMDB_API_TOKEN...")
         tmdb_api.login()
         
-        # check TG_BOT_TOKEN valid
-        log.logger.info("Checking TG_BOT_TOKEN...")
-        tgbot.bot_authorization()
-        
-        # check TG_CHAT_ID valid
-        log.logger.info("Checking TG_CHAT_ID...")
-        tgbot.get_chat()
+        # check TG_BOT_TOKEN valid and # check TG_CHAT_ID valid
+        if os.getenv('TG_BOT_TOKEN') or os.getenv('TG_CHAT_ID'):
+            log.logger.info("Checking TG_BOT_TOKEN...")
+            tgbot.bot_authorization()
+            log.logger.info("Checking TG_CHAT_ID...")
+            tgbot.get_chat()
+        else:
+            log.logger.warning("No TG_BOT_TOKEN or TG_CHAT_ID found.")
 
         # send welcome message
         global Sender

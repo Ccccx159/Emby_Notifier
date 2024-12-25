@@ -59,7 +59,8 @@ class TelegramSender(MessageSender):
                 if media["media_type"] == "Movie"
                 else f"{media['media_name']} {media['tv_episode_name']}"
             ),
-            year=media["media_rel"][0:4],
+            # 部分电视剧没有 air_date 导致无法获取当前剧集的上映年份，增加年份字段判断保护
+            year=media["media_rel"][0:4] if media["media_rel"] else "Unknown",
             episode=(
                 f"已更新至 第{media['tv_season']}季 第{media['tv_episode']}集\n"
                 if media["media_type"] == "Episode"

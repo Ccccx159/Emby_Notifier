@@ -212,6 +212,17 @@ class Episode(IMedia):
             log.logger.error(err)
             log.logger.warning("No still path found. use poster instead.")
             still = poster
+
+        # tv_datails["air_date"] 为 None 时，查询season的air_date
+        if tv_details["air_date"] is None:
+            log.logger.warning("No air_date found for this episode, will use season air_date.")
+            season_details, err = tmdb_api.get_tv_season_details(self.info_["ProviderIds"]["Tmdb"], self.info_["Season"])
+            if season_details:
+                tv_details["air_date"] = season_details["air_date"]
+            else:
+                log.logger.error(err)
+                log.logger.warning("No air_date found for this episode, will use current year.")
+                tv_details["air_date"] = str(datetime.now().year)
         
         self.media_detail_["media_name"] = self.info_["Name"]
         self.media_detail_["media_type"] = "Episode"
