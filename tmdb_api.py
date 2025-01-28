@@ -6,6 +6,7 @@ import requests, os, log
 TMDB_API = "https://api.themoviedb.org/3"
 
 TMDB_API_TOKEN = os.getenv("TMDB_API_TOKEN")
+TMDB_IMAGE_DOMAIN = os.getenv("TMDB_IMAGE_DOMAIN", "https://image.tmdb.org")
 
 TMDB_API_HEADERS = {
     "accept": "application/json",
@@ -134,7 +135,7 @@ def get_movie_poster(tmdb_id):
     if movie_details:
         poster_path = movie_details.get("poster_path")
         if poster_path:
-            poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}"
+            poster_url = f"{TMDB_IMAGE_DOMAIN}/t/p/w500{poster_path}"
             return poster_url, None
         return None, f"No poster path found for movie {tmdb_id}."
     return None, err_info
@@ -184,7 +185,7 @@ def get_tv_season_poster(tmdb_id, season_number):
     if season_details:
         poster_path = season_details.get("poster_path")
         if poster_path:
-            poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}"
+            poster_url = f"{TMDB_IMAGE_DOMAIN}/t/p/w500{poster_path}"
             return poster_url, None
         return None, "No poster path found for TV {tmdb_id} season {season_number}."
     return None, err_info
@@ -232,7 +233,7 @@ def get_movie_backdrop_path(tmdb_id):
     if movie_details:
         backdrop_path = movie_details.get("backdrop_path")
         if backdrop_path:
-            return f"https://image.tmdb.org/t/p/w500{backdrop_path}", None
+            return f"{TMDB_IMAGE_DOMAIN}/t/p/w500{backdrop_path}", None
         return None, f"No backdrop path found for movie {tmdb_id}."
     return None, err_info
 
@@ -242,5 +243,5 @@ def get_tv_episode_still_paths(tmdb_id, season_number, episode_number):
     if episode_details:
         still = episode_details.get("still_path")
         if still:
-            return f"https://image.tmdb.org/t/p/w500{still}", None
+            return f"{TMDB_IMAGE_DOMAIN}/t/p/w500{still}", None
         return None, f"No stills found for TV {tmdb_id} S{season_number}E{episode_number}."
