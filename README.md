@@ -178,6 +178,8 @@ Emby Server 的新媒体添加事件的触发时机受限于对新增文件的�
 
 ## 效果展示
 
+### telegram
+
 电影：
 
 ![](https://user-images.githubusercontent.com/35327600/209752390-4e45180b-d8cc-4378-bd98-c489638f7cb7.png)
@@ -185,6 +187,16 @@ Emby Server 的新媒体添加事件的触发时机受限于对新增文件的�
 剧集：
 
 ![](https://user-images.githubusercontent.com/35327600/209752275-bad230b0-97a7-47e5-9a77-081afae7d6cf.png)
+
+### 企业微信
+
+![](./doc/wechat_emby.jpg)
+
+![](./doc/wechat_jelly.jpg)
+
+### bark
+
+![](./doc/bark.jpg)
 
 ## 参考文档
 
