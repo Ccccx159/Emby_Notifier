@@ -8,8 +8,8 @@ import sender
 from sender import Sender
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "3.1.0"
-UPDATETIME = "2025-01-28"
+VERSION = "4.0.0"
+UPDATETIME = "2025-01-31"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 
@@ -61,6 +61,9 @@ def env_check():
     print(f"{'WECHAT_CORP_SECRET:':<15} {'(req)'} {os.getenv('WECHAT_CORP_SECRET', 'None')}")
     print(f"{'WECHAT_AGENT_ID:':<15} {'(req)'} {os.getenv('WECHAT_AGENT_ID', 'None')}")
     print(f"{'WECHAT_USER_ID:':<15} {'(req)'} {os.getenv('WECHAT_USER_ID', 'None')}")
+    print("\n--------Bark Server info:")
+    print(f"{'BARK_SERVER:':<15} {'(opt)'} {os.getenv('BARK_SERVER', 'https://api.day.app')}")
+    print(f"{'BARK_DEVICE_KEYS:':<15} {'(opt)'} {os.getenv('BARK_DEVICE_KEYS', 'None')}")
     print("\n--------Log info:")
     print(f"{'LOG_LEVEL:':<15} {'(opt)'} {os.getenv('LOG_LEVEL', 'INFO')}")
     print(f"{'LOG_EXPORT:':<15} {'(opt)'} {os.getenv('LOG_EXPORT', 'False')}")

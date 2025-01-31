@@ -5,6 +5,7 @@ import requests, os, time
 import log
 import wxapp
 import tgbot
+import bark
 import traceback
 
 Sender = None
@@ -127,6 +128,43 @@ class WechatAppSender(MessageSender):
         wxapp.send_news_notice(card_details)
 
 
+class BarkSender(MessageSender):
+    def __str__(self):
+        return "Bark"
+
+    def send_welcome(self, welcome: dict):
+        payload = {
+            "title": f"🎊 Welcome to EMBY Notifier {welcome['version']}",
+            "body": f"Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported.",
+            "url": f"{welcome['repo']}"
+        }
+        bark.send_message(payload)
+
+    def send_test_msg(self, test_content: str):
+        # test_content: This is a test message from *Aliyun_Shared*!
+        # 将*中间的字符串提取出来作为server_name
+        server_name = test_content.split("*")[3]
+        payload = {
+            "title": "🎉 EMBY Notifier Test",
+            "body": f"Congratulation! This is a test message from {server_name}! Now you can try adding a new media item to your Emby Server, whether it is a movie or a TV series~"
+        }
+        bark.send_message(payload)
+
+    def send_media_details(self, media: dict):
+        payload = {
+            "title": f"🎬 #{media.get('server_name')} 影视更新",
+            "body": f"[{'电影' if media['media_type'] == 'Movie' else '剧集'}] {media['media_name']} ({media['media_rel'][:4]})"
+            + (
+                f" 第 {media.get('tv_season')} 季 | 第 {media.get('tv_episode')} 集"
+                if media.get("media_type") == "Episode"
+                else ""
+            ),
+            "icon": f"https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/{media.get('server_type', 'Emby').lower()}.png",
+            "url": f"{media['media_tmdburl']}",
+        }
+        bark.send_message(payload)
+
+
 class SenderManager:
     def __init__(self):
         self.senders = []
@@ -143,6 +181,12 @@ class SenderManager:
         wechat_agent_id = os.getenv("WECHAT_AGENT_ID")
         if wechat_corp_id and wechat_corp_secret and wechat_agent_id:
             self.senders.append(WechatAppSender())
+
+        bark_server = os.getenv("BARK_SERVER")
+        bark_device_keys = os.getenv("BARK_DEVICE_KEYS")
+        log.logger.error(f"bark_server: {bark_server}, bark_device_keys: {bark_device_keys}")
+        if bark_server and bark_device_keys:
+            self.senders.append(BarkSender())
 
     def send_welcome(self, welcome_message: dict):
         for sender in self.senders:

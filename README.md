@@ -4,6 +4,10 @@
 
 ## 重大更新！！！
 
+v4.0.0 版本现已支持 [bark](https://bark.day.app/#/) 进行推送
+
+v3.0.0 版本现已支持 **企业微信** 进行推送，媒体信息通过图文卡片进行推送，仅支持 **企业微信** app 接收【<mark>注： 微信中的企业微信插件无法接收此类消息</mark>】
+
 v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [Jellyfin Server 设置](#jellyfin-server-设置)
 
 ## Emby Server 版本 (重要！！！)
@@ -22,6 +26,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v4.0.0 | 2025.01.31 | <li>1. 新增 bark 推送支持，详细配置请参看 [bark 官网](https://bark.day.app/#/)；</li> |
 | v3.1.0 | 2025.01.28 | <li>1. 新增 TMDB_IMAGE_DOMAIN 环境变量， TMDB图片地址，默认`https://image.tmdb.org`，可配置为其它中转代理以加速TMDB图片显示，如：`https://static-mdb.v.geilijiasu.com`</li>|
 | v3.0.5 | 2024.12.26 | <li>1. 取消 tg 相关参数的强校验，仅设置时进行可用性校验</li><li>2. 修复TMDB部分剧集的 air_date 参数为导致的推送失败问题</li>|
 | v3.0.4 | 2024.10.02 | <li>1. 增加兼容性，当“still_path”获取失败时由海报“poster”代替</li>|
@@ -63,6 +68,8 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 | WECHAT_CORP_SECRET | 可选 | （企业微信）应用的凭证秘钥 |
 | WECHAT_AGENT_ID | 可选 | （企业微信）应用 agentid |
 | WECHAT_USER_ID | 可选 | （企业微信）用户 id，默认为“@all” |
+| BARK_SERVER | 可选 | bark 服务地址，默认为公共服务器：https://api.day.app |
+| BARK_DEVICE_KEYS | 可选 | bark 设备密钥，支持设置多个设备密钥，用逗号分隔。e.g. "abcdefqweqwe,qwewqeqeqw,qweqweqweq,qweqweqwe" |
 
 ## docker Run
 
