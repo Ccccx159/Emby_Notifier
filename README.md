@@ -26,6 +26,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v4.0.1 | 2025.02.05 | <li>1. 环境校验补充增加 bark 参数检查；</li><li>2. 修复仅配置 bark sender 时配置校验失败问题；</li><li>3. 修改 wechat token 缓存文件命名，并修改 git ignore 文件</li> |
 | v4.0.0 | 2025.01.31 | <li>1. 新增 bark 推送支持，详细配置请参看 [bark 官网](https://bark.day.app/#/)；</li> |
 | v3.1.0 | 2025.01.28 | <li>1. 新增 TMDB_IMAGE_DOMAIN 环境变量， TMDB图片地址，默认`https://image.tmdb.org`，可配置为其它中转代理以加速TMDB图片显示，如：`https://static-mdb.v.geilijiasu.com`</li>|
 | v3.0.5 | 2024.12.26 | <li>1. 取消 tg 相关参数的强校验，仅设置时进行可用性校验</li><li>2. 修复TMDB部分剧集的 air_date 参数为导致的推送失败问题</li>|

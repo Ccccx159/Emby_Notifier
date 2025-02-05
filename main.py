@@ -73,12 +73,14 @@ def env_check():
     try:
         if os.getenv('TMDB_API_TOKEN') is None:
             raise Exception("TMDB_API_TOKEN is required.")
-        if os.getenv('TG_BOT_TOKEN') is None and os.getenv('WECHAT_CORP_ID') is None:
+        if os.getenv('TG_BOT_TOKEN') is None and os.getenv('WECHAT_CORP_ID') is None and os.getenv('BARK_DEVICE_KEYS') is None:
             raise Exception("You must set up at least one notification method, such as a Telegram bot or a WeChat Work application.")
         if os.getenv('TG_BOT_TOKEN') and os.getenv('TG_CHAT_ID') is None:
             raise Exception("TG_CHAT_ID is required.")
         if os.getenv('WECHAT_CORP_ID') and (os.getenv('WECHAT_CORP_SECRET') is None or os.getenv('WECHAT_AGENT_ID') is None):
             raise Exception("Wechat Application config is not completed.")
+        if os.getenv('BARK_SERVER') and os.getenv('BARK_DEVICE_KEYS') is None:
+            raise Exception("Bark Server config is not completed.")
     except Exception as e:
         log.logger.error(e)
         print("\033[1;31m")

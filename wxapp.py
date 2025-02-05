@@ -23,7 +23,7 @@ TOKEN = {
     "expires_time": None,
 }
 
-TOKEN_FILE = "wechat.json"
+TOKEN_FILE = "_tmp_wechat.json"
 
 # 获取应用 token 的 url
 GET_TOKEN_URL = (
