@@ -138,6 +138,32 @@ def send_markdown(content):
         raise e
 
 
+def send_news(article):
+    payload = {
+        "touser": USER_ID,
+        "agentid": AGENT_ID,
+        "msgtype": "news",
+        "news": {
+            "articles": [article]    
+        }
+    }
+    log.logger.debug(log.SensitiveData(json.dumps(payload, ensure_ascii=False)))
+
+    send_msg_url = SEND_MSG_URL + get_access_token()
+    try:
+        res = requests.post(send_msg_url, json=payload)
+        res.raise_for_status()
+        if res.json()["errcode"] != 0:
+            raise Exception(f"Send news failed. {res.text}")
+        log.logger.debug(f"Send news successful. Response: {res.json()}")
+    except requests.exceptions.ConnectionError as e:
+        log.logger.error(f"Send news failed. Check network connection: {e}")
+        raise e
+    except Exception as e:
+        log.logger.error(f"Send news failed. Error: {e}")
+        raise e
+
+
 def send_news_notice(card_detail):    
     payload = {
         "touser": USER_ID,

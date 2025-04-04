@@ -87,45 +87,60 @@ class WechatAppSender(MessageSender):
         wxapp.send_text(test_content)
 
     def send_media_details(self, media: dict):
-        card_details = {
-            "card_type": "news_notice",
-            "source": {
-                "icon_url": f"https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/{media.get('server_type', 'Emby').lower()}.png",
-                "desc": f"{media.get('server_type')} Server",
-                "desc_color": 0,
-            },
-            "main_title": {
-                "title": f"#{media.get('server_name')} 影视更新",
-            },
-            "card_image": {
-                "url": f"{media.get('media_backdrop') if media.get('media_type') == 'Movie' else media.get('media_still')}",
-                "aspect_ratio": 2.25,
-            },
-            "vertical_content_list": [
-                {
-                    "title": f"[{'电影' if media.get('media_type') == 'Movie' else '剧集'}] {media.get('media_name')} ({media.get('media_rel')[:4]})"
-                    + (
-                        f" 第 {media.get('tv_season')} 季 | 第 {media.get('tv_episode')} 集"
-                        if media.get("media_type") == "Episode"
-                        else ""
-                    ),
-                    "desc": f"{media.get('media_intro')}",
-                }
-            ],
-            "horizontal_content_list": [
-                {"keyname": "上映日期", "value": f"{media.get('media_rel')}"},
-                {"keyname": "评分", "value": f"{media.get('media_rating')}"},
-            ],
-            "jump_list": [
-                {
-                    "type": 1,
-                    "url": f"{media.get('media_tmdburl')}",
-                    "title": "TMDB",
+        msgtype = os.getenv("WECHAT_MSG_TYPE", "news_notice")
+        if msgtype == "news_notice":
+            card_details = {
+                "card_type": "news_notice",
+                "source": {
+                    "icon_url": f"https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/{media.get('server_type', 'Emby').lower()}.png",
+                    "desc": f"{media.get('server_type')} Server",
+                    "desc_color": 0,
                 },
-            ],
-            "card_action": {"type": 1, "url": f"{media.get('server_url')}"},
-        }
-        wxapp.send_news_notice(card_details)
+                "main_title": {
+                    "title": f"#{media.get('server_name')} 影视更新",
+                },
+                "card_image": {
+                    "url": f"{media.get('media_backdrop') if media.get('media_type') == 'Movie' else media.get('media_still')}",
+                    "aspect_ratio": 2.25,
+                },
+                "vertical_content_list": [
+                    {
+                        "title": f"[{'电影' if media.get('media_type') == 'Movie' else '剧集'}] {media.get('media_name')} ({media.get('media_rel')[:4]})"
+                        + (
+                            f" 第 {media.get('tv_season')} 季 | 第 {media.get('tv_episode')} 集"
+                            if media.get("media_type") == "Episode"
+                            else ""
+                        ),
+                        "desc": f"{media.get('media_intro')}",
+                    }
+                ],
+                "horizontal_content_list": [
+                    {"keyname": "上映日期", "value": f"{media.get('media_rel')}"},
+                    {"keyname": "评分", "value": f"{media.get('media_rating')}"},
+                ],
+                "jump_list": [
+                    {
+                        "type": 1,
+                        "url": f"{media.get('media_tmdburl')}",
+                        "title": "TMDB",
+                    },
+                ],
+                "card_action": {"type": 1, "url": f"{media.get('server_url')}"},
+            }
+            wxapp.send_news_notice(card_details)
+        elif msgtype == "news":
+            article = {
+                "title" : f"[影视更新][{'电影' if media.get('media_type') == 'Movie' else '剧集'}] {media.get('media_name')} ({media.get('media_rel')[:4]})"
+                            + (
+                                f" 第 {media.get('tv_season')} 季 | 第 {media.get('tv_episode')} 集"
+                                if media.get("media_type") == "Episode"
+                                else ""
+                            ),
+                "description" : f"{media.get('media_intro')}",
+                "url" : f"{media.get('media_tmdburl')}",
+                "picurl" : f"{media.get('media_backdrop') if media.get('media_type') == 'Movie' else media.get('media_still')}"
+            }
+            wxapp.send_news(article)
 
 
 class BarkSender(MessageSender):

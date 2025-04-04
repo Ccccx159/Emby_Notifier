@@ -69,6 +69,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 | WECHAT_CORP_SECRET | 可选 | （企业微信）应用的凭证秘钥 |
 | WECHAT_AGENT_ID | 可选 | （企业微信）应用 agentid |
 | WECHAT_USER_ID | 可选 | （企业微信）用户 id，默认为“@all” |
+| WECHAT_MSG_TYPE | 可选 | （企业微信）消息类型，支持图文类型（news）与模板卡片（news_notice），默认模板卡片 |
 | BARK_SERVER | 可选 | bark 服务地址，默认为公共服务器：https://api.day.app |
 | BARK_DEVICE_KEYS | 可选 | bark 设备密钥，支持设置多个设备密钥，用逗号分隔。e.g. "abcdefqweqwe,qwewqeqeqw,qweqweqweq,qweqweqwe" |
 
