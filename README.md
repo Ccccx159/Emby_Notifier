@@ -56,12 +56,14 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 端口：8000
 
+<mark>Telegram、WeChat、Bark 三种通知方式至少配置一种。</mark>
+
 | 参数 | 要求 | 说明 |
 | -- | -- | -- |
 | TMDB_API_TOKEN | 必须 | TMDB API 读访问令牌（API Read Access Token） |
 | TVDB_API_KEY | 可选 | Your TVDB API Key |
-| TG_BOT_TOKEN | 必须 | Your Telegram Bot Token |
-| TG_CHAT_ID | 必须 | Your Telegram Channel's Chat ID |
+| TG_BOT_TOKEN | 可选 | Your Telegram Bot Token |
+| TG_CHAT_ID | 可选 | Your Telegram Channel's Chat ID |
 | LOG_LEVEL | 可选 | 日志等级 [DEBUG, INFO, WARNING] 三个等级，默认 INFO|
 | LOG_EXPORT | 可选 | 日志写文件标志 [True, False] 是否将日志输出到文件，默认 False|
 | LOG_PATH | 可选 | 日志文件保存路径，默认 /var/tmp/emby_notifier_tg |
@@ -101,9 +103,9 @@ services:
       # 这里所有的环境变量都不要使用引号
       # 必填参数
       - TMDB_API_TOKEN=<Your TMDB API Token>
+      # 可选参数
       - TG_BOT_TOKEN=<Your Telegram Bot Tokne>
       - TG_CHAT_ID=<Your Telegram Channel's Chat ID>
-      # 可选参数
       - TVDB_API_KEY=<Your TVDB API Key>
       - LOG_LEVEL=INFO # [DEBUG, INFO, WARNING] 三个等级，默认 INFO
       - LOG_EXPORT=False # [True, False0] 是否将日志输出到文件，默认 False
@@ -112,6 +114,7 @@ services:
       - WECHAT_CORP_SECRET=xxxxxx # 企业微信：应用凭证秘钥
       - WECHAT_AGENT_ID=xxxxx # 企业微信：应用 agentid
       - WECHAT_USER_ID=xxxxxx # 企业微信：用户 id，不设置时默认为 “@all”
+      - WECHAT_MSG_TYPE=news_notice  # 企业微信：消息类型，支持 news/news_notice，不设置默认为 news_notice
     network_mode: "bridge"
     ports:
       - "8000:8000"
