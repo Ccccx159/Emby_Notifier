@@ -199,7 +199,7 @@ class SenderManager:
 
         bark_server = os.getenv("BARK_SERVER")
         bark_device_keys = os.getenv("BARK_DEVICE_KEYS")
-        log.logger.error(f"bark_server: {bark_server}, bark_device_keys: {bark_device_keys}")
+        log.logger.debug(f"bark_server: {bark_server}, bark_device_keys: {bark_device_keys}")
         if bark_server and bark_device_keys:
             self.senders.append(BarkSender())
 

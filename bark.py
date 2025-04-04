@@ -10,7 +10,7 @@ import log
 BARK_SERVER = os.getenv("BARK_SERVER", "https://api.day.app")
 # single or multiple device keys, separated by commas
 # e.g. "abcdefqweqwe,qwewqeqeqw,qweqweqweq,qweqweqwe"
-BARK_DEVICE_KEYS = os.getenv("BARK_DEVICE_KEYS")
+BARK_DEVICE_KEYS = os.getenv("BARK_DEVICE_KEYS", "")
 BARK_DEVICE_KEYS = BARK_DEVICE_KEYS.split(",")
 
 def send_message(content: dict):
