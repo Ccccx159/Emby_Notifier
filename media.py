@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-
+import os
 import abc, json, time
 import my_utils, tmdb_api, tvdb_api, tgbot
 import log
@@ -178,7 +178,7 @@ class Episode(IMedia):
         log.logger.debug(self.info_)
 
     def get_details(self):
-        if "Tvdb" in self.info_["ProviderIds"]:
+        if "Tvdb" in self.info_["ProviderIds"] and not os.getenv("TVDB_API_KEY") is None:
             tvdb_id, err = tvdb_api.get_seriesid_by_episodeid(self.info_["ProviderIds"]["Tvdb"])
             if err:
                 log.logger.warn(err)
