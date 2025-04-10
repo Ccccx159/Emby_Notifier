@@ -21,11 +21,16 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 <mark>需要注意的是，群晖套件中心的 Emby Server 最新在线版本为 4.7.14.0，因此需要 Emby 官方网站下载相应平台的安装包进行手动安装。</mark>
 
+## Contributors
+
+[![Contributors](http://contrib.nn.ci/api?repo=Ccccx159/Emby_Notifier)](https://github.com/Ccccx159/Emby_Notifier/graphs/contributors)
+
 ## 修订版本
 
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v4.1.0 | 2025.04.10 | <li>1. 微信增加图文消息类型支持；</li><li>2. 优化 TVDB_API_KEY 未配置时仍然查询TVDB导致报错的问题；</li><li>3. 修复 BARK_DEVICE_KEYS 未配置时启动报错的问题</li><li>4. 修改readme中TG变量说明</li> |
 | v4.0.1 | 2025.02.05 | <li>1. 环境校验补充增加 bark 参数检查；</li><li>2. 修复仅配置 bark sender 时配置校验失败问题；</li><li>3. 修改 wechat token 缓存文件命名，并修改 git ignore 文件</li> |
 | v4.0.0 | 2025.01.31 | <li>1. 新增 bark 推送支持，详细配置请参看 [bark 官网](https://bark.day.app/#/)；</li> |
 | v3.1.0 | 2025.01.28 | <li>1. 新增 TMDB_IMAGE_DOMAIN 环境变量， TMDB图片地址，默认`https://image.tmdb.org`，可配置为其它中转代理以加速TMDB图片显示，如：`https://static-mdb.v.geilijiasu.com`</li>|
