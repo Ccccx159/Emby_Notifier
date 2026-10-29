@@ -166,6 +166,13 @@ docker pull b1gfac3c4t/emby_notifier_tg:ci
 | `DOCKERHUB_USERNAME` | Docker Hub 用户名 |
 | `DOCKERHUB_TOKEN` | Docker Hub Access Token，需要镜像仓库写权限 |
 
+### 创建 Tag 和 Release
+
+发布新版本时，更新 `.github/release.json` 中的版本号与说明文件路径，并在
+`.github/release-notes/` 中添加中文 Release 说明。变更合并到 `main` 后，
+`create-release.yml` 会先构建并推送 amd64/arm64 正式镜像；镜像发布成功后，
+再创建对应的 Git Tag 与 GitHub Release。构建失败时不会创建 Tag 或 Release。
+
 ## Emby Server 设置
 
 1. 打开 Emby Server 控制台，点击左侧菜单栏的 “设置” -> “通知” -> “添加 Webhooks”

@@ -1,4 +1,4 @@
-name: Build and publish Docker image
+name: 构建并发布 Docker 镜像
 
 on:
   push:
@@ -19,17 +19,17 @@ env:
 
 jobs:
   build-amd64:
-    name: Build amd64 verification artifact
+    name: 构建 amd64 验证产物
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: 检出仓库
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: 配置 Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build amd64 image archive
+      - name: 构建 amd64 镜像归档
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -40,7 +40,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Upload amd64 image archive
+      - name: 上传 amd64 镜像归档
         uses: actions/upload-artifact@v4
         with:
           name: emby-notifier-amd64-${{ github.sha }}
@@ -49,7 +49,7 @@ jobs:
           retention-days: 7
 
   publish-amd64-ci:
-    name: Publish amd64 verification image
+    name: 发布 amd64 验证镜像
     if: >-
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' &&
@@ -59,19 +59,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: 检出仓库
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: 配置 Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
+      - name: 登录 Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push amd64 verification image
+      - name: 构建并推送 amd64 验证镜像
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -83,27 +83,27 @@ jobs:
           cache-to: type=gha,mode=max
 
   publish:
-    name: Publish linux/amd64 and linux/arm64
+    name: 发布 linux/amd64 和 linux/arm64
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: 检出仓库
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
+      - name: 配置 QEMU
         uses: docker/setup-qemu-action@v3
 
-      - name: Set up Docker Buildx
+      - name: 配置 Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
+      - name: 登录 Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Generate image metadata
+      - name: 生成镜像元数据
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -112,7 +112,7 @@ jobs:
             type=ref,event=tag
             type=raw,value=latest
 
-      - name: Build and push multi-platform image
+      - name: 构建并推送多架构镜像
         uses: docker/build-push-action@v6
         with:
           context: .
