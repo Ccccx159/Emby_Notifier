@@ -38,8 +38,7 @@ jobs:
             exit 1
           fi
           if git ls-remote --exit-code --tags origin "refs/tags/$version" >/dev/null 2>&1; then
-            echo "Tag 已存在：$version" >&2
-            exit 1
+            echo "Tag 已存在，将在正式镜像发布成功后更新：$version"
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "notes_file=$notes_file" >> "$GITHUB_OUTPUT"
