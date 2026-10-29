@@ -144,6 +144,16 @@ docker load -i emby-notifier-amd64.tar
 docker image ls | grep emby-notifier
 ```
 
+此外，`main`、仓库所有者创建的同仓库 Pull Request，以及仓库所有者手动
+触发的构建，会将 amd64 验证镜像推送到固定的 `:ci` 标签，方便直接验证：
+
+```bash
+docker pull b1gfac3c4t/emby_notifier_tg:ci
+```
+
+外部 Fork 创建的 Pull Request 不会接触 Docker Hub Secrets，也不会推送
+验证镜像。
+
 推送 `v*` 格式的 Git tag 时，除生成验证 artifact 外，还会自动构建并推送
 `linux/amd64`、`linux/arm64` 镜像到 Docker Hub，并同时更新 `latest`。
 
