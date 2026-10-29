@@ -49,7 +49,7 @@ jobs:
           retention-days: 7
 
   publish-amd64-ci:
-    name: 发布 amd64 验证镜像
+    name: 发布 amd64 预发布验证镜像
     if: >-
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' &&
@@ -71,14 +71,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 构建并推送 amd64 验证镜像
+      - name: 构建并推送 amd64 预发布验证镜像
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ env.IMAGE_NAME }}:ci
+          tags: ${{ env.IMAGE_NAME }}:Pre-release
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -103,23 +103,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 生成镜像元数据
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=tag
-            type=raw,value=latest
-
-      - name: 构建并推送多架构镜像
+      - name: 构建并推送 amd64 正式镜像
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 构建并推送 arm64 正式镜像
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:aarch64
           cache-from: type=gha
           cache-to: type=gha,mode=max

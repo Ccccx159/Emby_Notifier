@@ -56,26 +56,61 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 构建并推送正式多架构镜像
+      - name: 构建并推送 amd64 正式镜像
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:${{ steps.release.outputs.version }}
-            ${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: 创建 Git Tag 与 GitHub Release
+      - name: 构建并推送 arm64 正式镜像
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:aarch64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 清理误生成的版本镜像标签
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          VERSION: ${{ steps.release.outputs.version }}
+        shell: bash
+        run: |
+          jwt="$(curl -fsS -X POST 'https://hub.docker.com/v2/users/login' \
+            -H 'Content-Type: application/json' \
+            -d "{\"username\":\"$DOCKERHUB_USERNAME\",\"password\":\"$DOCKERHUB_TOKEN\"}" \
+            | python3 -c 'import json, sys; print(json.load(sys.stdin)["token"])')"
+          status="$(curl -sS -o /dev/null -w '%{http_code}' -X DELETE \
+            -H "Authorization: JWT $jwt" \
+            "https://hub.docker.com/v2/repositories/$IMAGE_NAME/tags/$VERSION/")"
+          if [[ "$status" != "204" && "$status" != "404" ]]; then
+            echo "删除 Docker Hub 版本标签失败，HTTP 状态码：$status" >&2
+            exit 1
+          fi
+
+      - name: 创建或更新 Git Tag 与 GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.release.outputs.version }}
           NOTES_FILE: ${{ steps.release.outputs.notes_file }}
-        run: >-
-          gh release create "$VERSION"
-          --target "$GITHUB_SHA"
-          --title "$VERSION"
-          --notes-file "$NOTES_FILE"
+        shell: bash
+        run: |
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            git tag -f "$VERSION" "$GITHUB_SHA"
+            git push origin "refs/tags/$VERSION" --force
+            gh release edit "$VERSION" --title "$VERSION" --notes-file "$NOTES_FILE"
+          else
+            gh release create "$VERSION" \
+              --target "$GITHUB_SHA" \
+              --title "$VERSION" \
+              --notes-file "$NOTES_FILE"
+          fi

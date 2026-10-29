@@ -146,17 +146,18 @@ docker image ls | grep emby-notifier
 ```
 
 此外，`main`、仓库所有者创建的同仓库 Pull Request，以及仓库所有者手动
-触发的构建，会将 amd64 验证镜像推送到固定的 `:ci` 标签，方便直接验证：
+触发的构建，会将 amd64 验证镜像推送到固定的 `Pre-release` 标签，方便直接验证：
 
 ```bash
-docker pull b1gfac3c4t/emby_notifier_tg:ci
+docker pull b1gfac3c4t/emby_notifier_tg:Pre-release
 ```
 
 外部 Fork 创建的 Pull Request 不会接触 Docker Hub Secrets，也不会推送
 验证镜像。
 
-推送 `v*` 格式的 Git tag 时，除生成验证 artifact 外，还会自动构建并推送
-`linux/amd64`、`linux/arm64` 镜像到 Docker Hub，并同时更新 `latest`。
+推送 `v*` 格式的 Git tag 时，除生成验证 artifact 外，还会把
+`linux/amd64` 推送到 Docker Hub `latest`，把 `linux/arm64` 推送到
+`aarch64`。
 
 首次发布前，在 GitHub 仓库的 `Settings` -> `Secrets and variables` ->
 `Actions` 中配置：
@@ -170,8 +171,9 @@ docker pull b1gfac3c4t/emby_notifier_tg:ci
 
 发布新版本时，更新 `.github/release.json` 中的版本号与说明文件路径，并在
 `.github/release-notes/` 中添加中文 Release 说明。变更合并到 `main` 后，
-`create-release.yml` 会先构建并推送 amd64/arm64 正式镜像；镜像发布成功后，
-再创建对应的 Git Tag 与 GitHub Release。构建失败时不会创建 Tag 或 Release。
+`create-release.yml` 会先将 amd64 正式镜像推送到 `latest`，将 arm64 正式镜像
+推送到 `aarch64`；镜像发布成功后，再创建对应的 Git Tag 与 GitHub Release。
+构建失败时不会创建或更新 Tag 与 Release。
 
 ## Emby Server 设置
 
