@@ -30,6 +30,7 @@ v2.0.0 版本现已支持 Jellyfin Server！！！详细配置请参看章节 [J
 
 | 版本 | 日期 | 修订说明 |
 | ----- | ----- | ----- |
+| v4.1.1 | 2026.10.29 | <li>1. 修复 Telegram 私聊用户未设置 username 时，启动检查因字段缺失而失败的问题（[#40](https://github.com/Ccccx159/Emby_Notifier/issues/40)）；</li><li>2. 增加 GitHub Actions Docker 构建流程，为 main、Pull Request 和手动构建提供 amd64 验证镜像与 artifact；</li><li>3. Git tag 发布时自动构建并推送 linux/amd64、linux/arm64 镜像；</li><li>4. Docker 构建改为使用当前检出的源码，保证版本可复现。</li> |
 | v4.1.0 | 2025.04.10 | <li>1. 微信增加图文消息类型支持；</li><li>2. 优化 TVDB_API_KEY 未配置时仍然查询TVDB导致报错的问题；</li><li>3. 修复 BARK_DEVICE_KEYS 未配置时启动报错的问题</li><li>4. 修改readme中TG变量说明</li> |
 | v4.0.1 | 2025.02.05 | <li>1. 环境校验补充增加 bark 参数检查；</li><li>2. 修复仅配置 bark sender 时配置校验失败问题；</li><li>3. 修改 wechat token 缓存文件命名，并修改 git ignore 文件</li> |
 | v4.0.0 | 2025.01.31 | <li>1. 新增 bark 推送支持，详细配置请参看 [bark 官网](https://bark.day.app/#/)；</li> |

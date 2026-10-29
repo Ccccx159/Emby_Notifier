@@ -66,13 +66,22 @@ def get_chat():
         res = requests.post(TG_BOT_URL, json=payload)
         res.raise_for_status()
         log.logger.debug(log.SensitiveData(res.text))
-        chat_type = res.json()['result']['type']
+        chat = res.json()['result']
+        chat_type = chat['type']
         if chat_type == 'private':
-            log.logger.info(f"Telegram getChat successful. Chat User: [{res.json()['result']['username']}], type: {chat_type}")
+            display_name = (
+                chat.get('username')
+                or ' '.join(
+                    name for name in (chat.get('first_name'), chat.get('last_name'))
+                    if name
+                )
+                or str(chat.get('id', 'Unknown'))
+            )
+            log.logger.info(f"Telegram getChat successful. Chat User: [{display_name}], type: {chat_type}")
         elif chat_type == 'channel':
-            log.logger.info(f"Telegram getChat successful. Chat title: [{res.json()['result']['title']}], type: {chat_type}")
+            log.logger.info(f"Telegram getChat successful. Chat title: [{chat.get('title', 'Unknown')}], type: {chat_type}")
         else:
-            log.logger.warning(f"Telegram getChat successful. Chat type: {chat_type}, Chat Detail: {res.json()['result']}")
+            log.logger.warning(f"Telegram getChat successful. Chat type: {chat_type}, Chat Detail: {chat}")
     except requests.exceptions.ConnectionError as e:
         log.logger.error(f"Telegram getChat failed. Check network connection: {e}")
         raise e

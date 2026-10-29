@@ -7,3 +7,5 @@ __pycache__/
 *.pyd
 **/test*
 **/_tmp*
+!tests/
+!tests/test_*.py

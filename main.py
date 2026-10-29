@@ -8,8 +8,8 @@ import sender
 from sender import Sender
 
 AUTHOR = "xu4n_ch3n"
-VERSION = "4.1.0"
-UPDATETIME = "2025-04-10"
+VERSION = "4.1.1"
+UPDATETIME = "2026-10-29"
 DESCRIPTION = "Emby Notifier is a media notification service for Emby Server. Now Jellyfin Server is alreay supported."
 REPOSITORY = "https://github.com/Ccccx159/Emby_Notifier"
 CONTRIBUTORS = "xiaoQQya"
