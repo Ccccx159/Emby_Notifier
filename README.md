@@ -130,6 +130,31 @@ services:
 docker-compose up -d
 ```
 
+## GitHub Actions 多架构镜像发布
+
+仓库中的 `docker-publish.yml` 使用 Docker Buildx 同时构建并推送
+`linux/amd64` 和 `linux/arm64` 镜像，不需要本地 ARM 构建环境。
+
+每次向 `main` 推送、创建指向 `main` 的 Pull Request，或在 Actions 页面
+手动运行 workflow 时，都会构建 `linux/amd64` 镜像，并将 Docker image tar
+作为保留 7 天的 Actions artifact 上传。下载后可以通过以下命令验证：
+
+```bash
+docker load -i emby-notifier-amd64.tar
+docker image ls | grep emby-notifier
+```
+
+推送 `v*` 格式的 Git tag 时，除生成验证 artifact 外，还会自动构建并推送
+`linux/amd64`、`linux/arm64` 镜像到 Docker Hub，并同时更新 `latest`。
+
+首次发布前，在 GitHub 仓库的 `Settings` -> `Secrets and variables` ->
+`Actions` 中配置：
+
+| Secret | 说明 |
+| -- | -- |
+| `DOCKERHUB_USERNAME` | Docker Hub 用户名 |
+| `DOCKERHUB_TOKEN` | Docker Hub Access Token，需要镜像仓库写权限 |
+
 ## Emby Server 设置
 
 1. 打开 Emby Server 控制台，点击左侧菜单栏的 “设置” -> “通知” -> “添加 Webhooks”
